@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>游戏记录</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style>
+       *{margin: 0;padding: 0;}
+        html,body{width: 100%;height: 100%;}
+        body{position: absolute;top: 0;left: 0;background:url('__STATIC__/images/img_bg.png') 100% 100%;background-size: 100% 100%;}
+        .back{width: 2rem;height: 2rem;}
+        .game-head{width: 100%;height: 4rem;}
+        .category-head{width: 100%;display: inline;white-space: nowrap;overflow-x: scroll;float: left;overflow-y: hidden;background-color: #291C4D;}
+        .category-head li{margin-top: 0.5rem;display:inline-block;}
+        .category-head li img{width: 4rem;height: 3rem;}
+        .title{width: 100%;height: 3rem;background-color: #291C4D;margin-bottom: 0.5rem;}
+        .title div{line-height: 3rem;text-align: center;color: #f5f5f5;}
+        .tab-content{color: #f5f5f5;}
+        .tab-item{width: 100%;height: 3rem;background-color: #291C4D;margin-bottom: 1px;}
+        .tab-item div{line-height: 3rem;text-align: center;}
+    </style>
+</head>
+<body>
+    <div class="layui-row">
+        <img src="__STATIC__/images/back.png" onclick="back()" class="back"/>
+    </div>
+
+    <div class="game-head">
+        <ul class="category-head">
+            <li class="layui-this"><img src="__STATIC__/images/all_game.png" onclick="getList(0)"/></li>
+            {volist name="data.gameList" id="vv"}
+            <li><img src="__STATIC__/images/game/{$vv.pic}" onclick="getList({$vv.id})"/></li>
+            {/volist}
+        </ul>
+    </div>
+
+    <div class="layui-row title">
+        <div class="layui-col-xs3">房间号</div>
+        <div class="layui-col-xs6">创建时间</div>
+        <div class="layui-col-xs3">房间状态</div>
+    </div>
+    <div class="tab-content">
+        {volist name="data.rooms" id="va"}
+        <div class="tab-item">
+            <div class="layui-col-xs3">{$va.id}</div>
+            <div class="layui-col-xs6">{:date('Y-m-d H:i:s',$va.create_time)}</div>
+            <div class="layui-col-xs3">
+                    {if condition="$va['status'] eq 0"}
+                        <button class="layui-btn layui-btn-sm">未开始</button>
+                    {elseif condition="$va['status'] eq 1"}
+                        <button class="layui-btn layui-btn-sm">进行中</button>
+                    {elseif condition="$va['status'] eq 2"}
+                        <button class="layui-btn layui-btn-sm" onclick="getInfo({$va.id})">已结束</button>
+                    {/if}
+            </div>
+        </div>
+        {/volist}
+    </div>
+
+    <script>
+        layui.use('layer', function(){
+            layer = layui.layer;
+			$ = layui.jquery;
+        });
+        
+        //返回上一级
+        function back(){
+            window.location.href = "/index.php/index/Personal/index";
+        }
+        //获取房间列表
+        function getList(id){
+            window.location.href = "/index.php/index/Roomlist/index?id="+id;
+        }
+        //获取房间详情
+        function getInfo(id){
+            window.location.href = "/index.php/index/Roomlist/info?id="+id;
+        }
+    </script>
+</body>
+</html>

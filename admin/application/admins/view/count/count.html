@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="__STATIC__/plugins/chart/echarts-all.js"></script>
+    <script src="__STATIC__/plugins/chart/echarts-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+
+    <style type="text/css">
+		.header span{background: #009688;margin-left: 30px;padding: 10px;color:#ffffff;}
+		.header div{border-bottom: solid 2px #009688;margin-top: 8px;}
+        .header button{float: right;margin-top: -5px;}
+	</style>
+</head>
+<body>
+    <div class="header">
+		<span>数据总览</span>
+		<div></div>
+    </div>
+
+    <div class="layui-row" style="margin-top:50px;">
+        <div class="layui-input-inline layui-col-md2 layui-col-md-offset1">
+            <div class="layui-row">
+                <div style="background:#00b7ee;border: 1px solid #00b7ee;text-align: center;">
+                    <div style="line-height: 4rem;color: #fff;font-weight: 700;">总用户</div>
+                    <div style="font-weight: 700;color: #ee0000;font-size: 2.5rem">{$count.personNum}</div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-inline layui-col-md2 layui-col-md-offset1">
+            <div class="layui-row">
+                <div style="background:#00b7ee;border: 1px solid #00b7ee;text-align: center;">
+                    <div style="line-height: 4rem;color: #fff;font-weight: 700;">剩余房卡</div>
+                    <div style="font-weight: 700;color: #ee0000;font-size: 2.5rem">{$count.cardNum}</div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-inline layui-col-md2 layui-col-md-offset1">
+            <div class="layui-row">
+                <div style="background:#00b7ee;border: 1px solid #00b7ee;text-align: center;">
+                    <div style="line-height: 4rem;color: #fff;font-weight: 700;">充值总数</div>
+                    <div style="font-weight: 700;color: #ee0000;font-size: 2.5rem">{$count.payNum}</div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-inline layui-col-md2 layui-col-md-offset1">
+            <div class="layui-row">
+                <div style="background:#00b7ee;border: 1px solid #00b7ee;text-align: center;">
+                    <div style="line-height: 4rem;color: #fff;font-weight: 700;">当前在线人数</div>
+                    <div style="font-weight: 700;color: #ee0000;font-size: 2.5rem">{$count.onLineNum}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-tab" lay-filter="demo">
+        <ul class="layui-tab-title">
+            <li class="layui-this">今天运营信息</li>
+            <li>昨天运营信息</li>
+            <li>本周运营信息</li>
+            <li>上周运营信息</li>
+            <li>本月运营信息</li>
+            <li>上月运营信息</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-pay-0"  style="height: 400px; width:500px;"></div>
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-card-0"  style="height: 400px; width:500px;"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-pay-1"  style="height: 400px; width:500px;"></div>
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-card-1"  style="height: 400px; width:500px;"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-pay-2"  style="height: 400px; width:500px;"></div>
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-card-2"  style="height: 400px; width:500px;"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-pay-3"  style="height: 400px; width:500px;"></div>
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-card-3"  style="height: 400px; width:500px;"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-pay-4"  style="height: 400px; width:500px;"></div>
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-card-4"  style="height: 400px; width:500px;"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-pay-5"  style="height: 400px; width:500px;"></div>
+                <div class="echarts layui-input-inline layui-col-md6" id="echarts-card-5"  style="height: 400px; width:500px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        layui.use('element', function(){
+            var element = layui.element;
+            $ = layui.jquery;
+            opreate(0);
+            element.on('tab(demo)', function(data){
+                //console.log(data.index);
+                var index = data.index;
+                opreate(index);
+            });
+        });
+
+        function opreate(index){
+            $.post('/admins.php/admins/count/countAjax',{index:index},function(res){
+                    //console.log(res);
+                    var data = res.data;
+                    var titleArr = [];
+                    var payNumArr = [];
+                    var useHouseCardArr = [];
+                    for(var i = 0;i<data.length;i++){
+                        titleArr.push(data[i].title);
+                        payNumArr.push(data[i].payNum);
+                        useHouseCardArr.push(data[i].useHouseCard);
+                    }
+
+                    var value1 = getType(titleArr,payNumArr);
+                    var obj1 = {
+                        id:'echarts-pay-'+index,              //父级id
+                        title:'玩家充值',                       //标题
+                        SumpayNum : '总充值数量:'+getSum(payNumArr),      //副标题
+                        platformList:titleArr,                      //左侧的平台列表
+                        value:value1,                           //图形内部悬浮框内容
+                    };
+                    ui.pie(obj1);
+
+                    //今日房卡消耗
+                    var value2 = getType(titleArr,useHouseCardArr);
+                    //console.log(titleArr+'\n'+payNumArr+'\n'+useHouseCardArr+'\n'+value1);
+                    var obj2 = {
+                        id:'echarts-card-'+index,                               //父级id
+                        title:'房卡消耗',                                       //标题
+                        SumpayNum : '总消耗房卡数量:'+getSum(useHouseCardArr),    //副标题
+                        platformList:titleArr,                      //左侧的平台列表
+                        value:value2,                           //图形内部悬浮框内容
+                    };
+                    ui.pie(obj2);
+                },'json');
+        }
+
+        //求和
+        function getSum(arr){
+            var he = 0;
+            for(var i = 0 ; i < arr.length; i++){
+                he += parseInt(arr[i]);
+            }
+            return he;
+        }
+        function getType(titleArr=array(),typeArr=array()){
+            var arr = [];
+            for(var i=0;i<titleArr.length;i++){
+                var obj = new Object;
+                obj.value = typeArr[i];
+                obj.name = titleArr[i];
+                arr.push(obj);
+            }
+            return arr;
+        }
+    </script>
+</body>
+</html>

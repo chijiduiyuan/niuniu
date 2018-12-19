@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style>
+        *{margin: 0;padding: 0;}
+        html,body{width: 100%;height: 100%;}
+        p{color: #f5f5f5;}
+        body{position: absolute;top: 0;left: 0;background:url('__STATIC__/images/bg.png') 100% 100%;background-size: 100% 100%;}
+        .avatar-row{text-align: center;margin-top: 1rem;}
+        .avatar{width: 5rem;height: 5rem;border-radius: 2.5rem;}
+        .avatar-row p{font-size: 700;margin-top: 0.5rem;}
+        .card-row{margin: 0.5rem 0;text-align: center;}
+        .icon-card{width: 1.5rem;height: 2.5rem;}
+        .card-row p{line-height: 2.5rem;}
+        .div-bg{background: url('__STATIC__/images/gray_bg.png') 100% 100%;background-size: 100% 100%;width: 94%;height: 1.6rem;margin: 0.5rem 3%;}
+        .div-bg p{line-height: 1.6rem;}
+        .icon{width: 1.5rem;height: 1.2rem;margin: 0.2rem;}
+        .icon img{width: 100%;height: 100%;}
+        .icon-right{height: 1.2rem;margin: 0.2rem;}
+        .icon-right img{width: 100%;height: 100%;}
+        .btn-home{width: 3rem;height: 3rem;position: fixed;top: 1rem;right: 1rem;}
+        .btn-home img{width: 100%;height: 100%;}
+        .margin-null{margin-bottom: 4rem;}
+
+        .swich{width:100%;margin:0 auto;}
+        .swich .box{width:90%;height:1.4rem;background:#ccc;border-radius:0.7rem;transition: all .5s ease;margin-top:0.1rem;margin-left: 50%;}
+        .swich .box span{display:inline-block;height:1.4rem;width:1.4rem;border-radius:0.7rem;background:#fff;transform:translateX(0px);transition: all .5s ease;}
+        .swich-on .box{background:forestgreen;transition: all .5s ease;}
+        .swich-on .box span{transform:translateX(30px);transition: all .5s ease;}
+
+        .pyq{width: 94%;height: 4rem;background-color: #856E38;margin-left: 3%;margin-top: -0.5rem;text-align: center;line-height: 4rem;}
+        .icon1{width: 2rem;height: 2rem;}
+    </style>
+</head>
+<body>
+    <!--个人信息部分-->
+    <div class="layui-container">
+        <div class="layui-row avatar-row">
+            <div class="layui-col-xs4 layui-col-xs-offset4">
+                <img src="{$data.user.avatar}" class="avatar"/>
+                <p>UID:{$data.user.uid}</p>
+                <p>{$data.user.nickname}</p>
+            </div>
+        </div>
+        <div class="layui-row card-row">
+            <div class="layui-col-xs4 layui-col-xs-offset4">
+                <div class="layui-row">
+                    <div class="layui-col-xs6">
+                        <img src="__STATIC__/images/icon_card.png" class="icon-card"/>
+                    </div>
+                    <div class="layui-col-xs6">
+                        <p>{$data.user.card}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="layui-col-xs6">
+                <div class="layui-col-xs6 layui-col-xs-offset2">
+                    <img src="__STATIC__/images/icon_mobile.png" class="icon-phone"/>
+                    <p>{:isset($data.user.phone) ? $data.user.phone : '未绑定'}</p>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <!--赠送房卡-->
+    <div class="layui-row div-bg" onclick="sendCard()">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/sendCard.png" />
+        </div>
+        <div class="layui-col-xs9">
+            <P>赠送房卡</P>
+        </div>
+        <div class="layui-col-xs1 icon-right">
+            <img src="__STATIC__/images/arrow.png" />
+        </div>
+    </div>
+
+    <!--房卡记录-->
+    <div class="layui-row div-bg" onclick="cardGift()">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/sendCard.png" />
+        </div>
+        <div class="layui-col-xs9">
+            <P>房卡记录</P>
+        </div>
+        <div class="layui-col-xs1 icon-right">
+            <img src="__STATIC__/images/arrow.png" />
+        </div>
+    </div>
+
+    <!--开房查询-->
+    <div class="layui-row div-bg" onclick="roomSearch()">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/cardsQuery.png" />
+        </div>
+        <div class="layui-col-xs9">
+            <P>开房查询</P>
+        </div>
+        <div class="layui-col-xs1 icon-right">
+            <img src="__STATIC__/images/arrow.png" />
+        </div>
+    </div>
+
+    <!--游戏记录-->
+    <div class="layui-row div-bg" onclick="roomList()">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/gamerecord.png" />
+        </div>
+        <div class="layui-col-xs9">
+            <P>游戏记录</P>
+        </div>
+        <div class="layui-col-xs1 icon-right">
+            <img src="__STATIC__/images/arrow.png" />
+        </div>
+    </div>
+
+    <!--牌友群-->
+    <div class="layui-row div-bg">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/friendGroup.png" />
+        </div>
+        <div class="layui-col-xs8">
+            <P>牌友群</P>
+        </div>
+        <div class="layui-col-xs2">
+            <div class="swich {$data.user.is_open_qun == 1? 'swich-on' : ''}">
+                <div class="box">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {if condition="$data.user.is_open_qun eq 1"}
+    <div class="layui-row pyq">
+        <div class="layui-col-xs6" onclick="invite({$data.uid})">
+            <div class="layui-row">
+                <div class="layui-col-xs6 icon1">
+                    <img src="__STATIC__/images/inviter.png" />
+                </div>
+                <div class="layui-col-xs6">
+                    <P>邀请函</P>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs6" onclick="qunMember()">
+            <div class="layui-row">
+                <div class="layui-col-xs6 icon1">
+                    <img src="__STATIC__/images/memberList.png" />
+                </div>
+                <div class="layui-col-xs6">
+                    <P>成员列表</P>
+                </div>
+            </div>
+        </div>
+    </div>
+    {/if}
+    <!--密钥设置-->
+    <div class="layui-row div-bg" onclick="setPwd()">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/setSigb.png" />
+        </div>
+        <div class="layui-col-xs9">
+            <P>密钥设置</P>
+        </div>
+        <div class="layui-col-xs1 icon-right">
+            <img src="__STATIC__/images/arrow.png" />
+        </div>
+    </div>
+
+    <!--通知与反馈-->
+    <div class="layui-row div-bg" onclick="feedBack()">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/feedbook.png" />
+        </div>
+        <div class="layui-col-xs9">
+            <P>通知与反馈</P>
+        </div>
+        <div class="layui-col-xs1 icon-right">
+            <img src="__STATIC__/images/arrow.png" />
+        </div>
+    </div>
+
+    <!--退出登陆-->
+    <div class="layui-row div-bg" onclick="logout()">
+        <div class="layui-col-xs2 icon">
+            <img src="__STATIC__/images/sendCard.png" />
+        </div>
+        <div class="layui-col-xs9">
+            <P>退出登陆</P>
+        </div>
+        <div class="layui-col-xs1 icon-right">
+            <img src="__STATIC__/images/arrow.png" />
+        </div>
+    </div>
+
+    <!--大厅导航-->
+    <div class="btn-home" onclick="backHome()">
+        <img src="__STATIC__/images/btn_home.png" />
+    </div>
+
+    <script>
+        layui.use(['layer','form'],function(){
+            var form = layui.form;
+			layer = layui.layer;
+			$ = layui.jquery;
+		});
+
+        //返回大厅
+        function backHome(){
+            window.location.href = "/index.php/index/Index/index";
+        }
+
+        //赠送房卡
+        function sendCard(){
+            window.location.href = "/index.php/index/Sendcard/index";
+        }
+
+        //房卡礼包
+        function cardGift(){
+            window.location.href = "/index.php/index/Cardgift/index";
+        }
+
+        //开房查询
+        function roomSearch(){
+            window.location.href = "/index.php/index/Roomsearch/index";
+        }
+
+        //游戏记录
+        function roomList(){
+            window.location.href = "/index.php/index/Roomlist/index";
+        }
+
+        //牌友群
+        (function(select){
+        var box = document.querySelector(select);
+        var checkbox = box.querySelector(".qun-of");
+        var status = "{$data.user.is_open_qun}";
+        //console.log(status);
+        box.onclick = function(){
+            this.classList.toggle("swich-on");
+            if(this.classList.length == 2){
+                status = 1;
+            }else if(this.classList.length == 1){
+                status = 0;
+            }
+            $.post('/index.php/index/Personal/qunAjax',{status:status},function(res){
+                if(res.code == 0){
+                    layer.msg(res.msg,{'icon':2,'anim':6});
+                    return;
+                }else{
+                    window.location.reload();
+                }
+            },'json')
+        }
+        })(".swich");
+
+        //邀请函
+        function invite(uid){
+            window.location.href = "/index.php/index/Invite/index?uid="+uid;
+        }
+
+        //成员列表
+        function qunMember(){
+            window.location.href = "/index.php/index/Qunmember/index";
+        }
+
+        //设置密钥
+        function setPwd(){
+            layer.prompt({title: '输入密钥(6-18个数字或字母)', formType:1}, function(text, index){
+                if(text == ""){
+                    layer.msg('输入密钥',{'icon':2,'anim':6});
+                    return;
+                }
+                if(!/^[a-zA-Z0-9]{6,18}$/.test(text)){
+                    layer.msg('密码格式不正确',{'icon':2,'anim':6});
+                    return;
+                }
+                $.post('/index.php/index/Personal/setPwd',{pwd:text},function(res){
+                    if(res.code == 0){
+                        layer.msg(res.msg,{'icon':2,'anim':6});
+                        return;
+                    }else{
+                        layer.msg(res.msg,{'icon':1});
+                        setTimeout(function(){
+                            window.location.href = '/index.php/index/Personal/index';
+                        },1000);
+                    }
+                },'json');
+            });
+        }
+
+        //通知与反馈
+        function feedBack(){
+            window.location.href = "/index.php/index/Feedback/index";
+        }
+
+
+        //退出登陆
+        function logout(){
+            layer.confirm('确定要退出吗？', {
+			  btn: ['确定','取消']
+			}, function(){
+                $.post('/index.php/index/Personal/logout',{},function(res){
+                    //console.log(res);
+                    if(res.code == 0){
+                        layer.msg(res.msg,{'icon':2,'anim':6});
+                        return;
+                    }else{
+                        layer.msg(res.msg,{'icon':1});
+                        setTimeout(function(){
+                            window.location.href = "/index.php/index/Login/login";
+                        },1000);
+                    }
+                },'json')
+			});
+        }
+    </script>
+</body>
+</html>

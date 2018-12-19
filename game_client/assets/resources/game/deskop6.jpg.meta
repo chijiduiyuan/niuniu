@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "f4a1c715-893f-40b6-b196-6bc7284e0a31",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "deskop6": {
+      "ver": "1.0.3",
+      "uuid": "bf717297-8108-4c60-9312-4980c7251dff",
+      "rawTextureUuid": "f4a1c715-893f-40b6-b196-6bc7284e0a31",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 750,
+      "height": 1206,
+      "rawWidth": 750,
+      "rawHeight": 1206,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

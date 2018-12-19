@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+        <input type="hidden" name="id" value="{$siteInfo.id}">
+		<div class="layui-form-item">
+            <label class="layui-form-label">平台</label>
+            <div class="layui-input-block">
+                <select name="agent" lay-verify="">
+					<option value="0">请选择一个平台</option>
+					{volist name="agentList" id="vv"}
+					<option value="{$vv.id}" <?php if($vv['id']==$siteInfo['agent']){echo 'selected';}?>>{$vv.title}</option>
+					{/volist}
+				</select>
+            </div>
+		</div>
+        <div class="layui-form-item">
+			<label class="layui-form-label">appid</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="appid" value="{$siteInfo.appid}">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">appsecret</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="appsecret" value="{$siteInfo.appsecret}">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">url</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="url" value="{$siteInfo.url}">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">默认房卡</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="card" value="{$siteInfo.card}">
+			</div>
+        </div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+	});
+
+    // 保存
+	function save(){
+		var agent = $.trim($('select[name="agent"]').val());
+		if(agent == 0){
+            layer.msg('请选择平台',{'icon':2,'anim':6});
+			return;
+        }
+        var appid = $.trim($('input[name="appid"]').val());
+        if(appid == ""){
+            layer.msg('请输入appid',{'icon':2,'anim':6});
+			return;
+        }
+		var appsecret = $.trim($('input[name="appsecret"]').val());
+        if(appsecret == ""){
+            layer.msg('请输入appsecret',{'icon':2,'anim':6});
+			return;
+        }
+		var card = $.trim($('input[name="card"]').val());
+        if(card == ""){
+            layer.msg('请输入房卡数量',{'icon':2,'anim':6});
+			return;
+        }
+		$.post('/admins.php/admins/Site/save',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+	}
+</script>

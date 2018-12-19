@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>修改玩家</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+        <input type="hidden" name="id" value="{$agentInfo.id}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">平台名称</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="title" value="{:isset($agentInfo.title)?$agentInfo.title:''}">
+            </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">主/代</label>
+			<div class="layui-input-inline">
+                <input type="radio" layui-skin="primary" name="is_main" title="主平台"  value="1" <?php if($agentInfo['is_main']==1){echo 'checked';}?>>
+				<input type="radio" layui-skin="primary" name="is_main" title="代理"  value="0" <?php if($agentInfo['is_main']==0){echo 'checked';}?>>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-inline">
+                <input type="radio" layui-skin="primary" name="status" title="开启"  value="1" <?php if($agentInfo['status']==1){echo 'checked';}?>>
+				<input type="radio" layui-skin="primary" name="status" title="关闭"  value="0" <?php if($agentInfo['status']==0){echo 'checked';}?>>
+			</div>
+		</div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+	});
+
+    // 保存
+	function save(){
+		$.post('/admins.php/admins/agent/save',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+	}
+</script>

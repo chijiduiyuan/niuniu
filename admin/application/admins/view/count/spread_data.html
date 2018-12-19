@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="__STATIC__/plugins/chart/echarts-all.js"></script>
+    <script src="__STATIC__/plugins/chart/echarts-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+
+    <style type="text/css">
+		.header span{background: #009688;margin-left: 30px;padding: 10px;color:#ffffff;}
+		.header div{border-bottom: solid 2px #009688;margin-top: 8px;}
+        .header button{float: right;margin-top: -5px;}
+	</style>
+</head>
+<body>
+    <div class="header">
+		<span>平台数据</span>
+		<div></div>
+    </div>
+
+    <div class="layui-row" style="margin-top:20px;">
+        <div class="layui-input-inline layui-col-md3">
+            <select name="agent" lay-verify="required" class="layui-input layui-col-md6 layui-col-md-offset2">
+                <option value="0">全部平台</option>
+                {volist name="agentList" id="vv"}
+                <option value="{$vv._id}">{$vv.title}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="layui-input-inline layui-col-md3">
+            <input type="text" class="layui-input layui-col-md6 layui-col-md-offset2" id="test1" name="time">
+        </div>
+        <div class="layui-input-inline layui-col-md3">
+            <select name="gameType" lay-verify="required" class="layui-input layui-col-md6 layui-col-md-offset2">
+                <option value="0">全部游戏</option>
+                {volist name="gameList" id="vv"}
+                <option value{$vv.type}>{$vv.title}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="layui-input-inline layui-col-md3">
+            <button class="layui-btn layui-btn-xs layui-col-md6 layui-col-md-offset2" onclick="searchs()">搜索</button>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top:50px;">
+        <div class="layui-input-inline layui-col-md2 layui-col-md-offset1">
+            <div class="layui-row">
+                <div style="background:#00b7ee;border: 1px solid #00b7ee;text-align: center;">
+                    <div style="line-height: 4rem;color: #fff;font-weight: 700;">总用户</div>
+                    <div style="font-weight: 700;color: #ee0000;font-size: 2.5rem">{$countList.allUserCount}</div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-inline layui-col-md2 layui-col-md-offset1">
+            <div class="layui-row">
+                <div style="background:#00b7ee;border: 1px solid #00b7ee;text-align: center;">
+                    <div style="line-height: 4rem;color: #fff;font-weight: 700;">新增用户</div>
+                    <div style="font-weight: 700;color: #ee0000;font-size: 2.5rem">{$countList.incUserCount}</div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-inline layui-col-md2 layui-col-md-offset1">
+            <div class="layui-row">
+                <div style="background:#00b7ee;border: 1px solid #00b7ee;text-align: center;">
+                    <div style="line-height: 4rem;color: #fff;font-weight: 700;">累计充值数量</div>
+                    <div style="font-weight: 700;color: #ee0000;font-size: 2.5rem">{$countList.refillCount}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top:50px;">
+        <article class="layui-input-inline layui-col-md6">
+            <div class="echarts" id="echarts-bar-user" style="height: 400px; width:500px;"></div>
+        </article>
+        <article class="layui-input-inline layui-col-md6">
+            <div class="echarts" id="echarts-line-pay" style="height: 400px; width:500px;"></div>  
+        </article>
+        <article class="layui-input-inline layui-col-md6">
+            <div class="echarts" id="echarts-line-card" style="height: 400px; width:500px;"></div>
+        </article>
+        <article class="layui-input-inline layui-col-md6">
+            <div class="echarts" id="echarts-line-room" style="height: 400px; width:500px;"></div>
+        </article>
+    </div>
+
+    {volist name="userList" id="vv"}
+        <form>
+            <input type="hidden" value="{$vv.time}" class="times1"/>
+            <input type="hidden" value="{$vv.newUser}" class="newUser"/>
+            <input type="hidden" value="{$vv.oldUser}" class="oldUser"/>
+        </form>
+    {/volist}
+
+    {volist name="payList" id="vv"}
+        <form>
+            <input type="hidden" value="{$vv.time}" class="times2"/>
+            <input type="hidden" value="{$vv.num}" class="count2"/>
+        </form>
+    {/volist}
+
+    {volist name="roomList" id="vv"}
+        <form>
+            <input type="hidden" value="{$vv.time}" class="times3"/>
+            <input type="hidden" value="{$vv.card}" class="card"/>
+            <input type="hidden" value="{$vv.room}" class="room"/>
+        </form>
+    {/volist}
+
+    <script>
+        layui.use(['layer','laypage','laydate'],function(){
+			layer = layui.layer;
+            $ = layui.jquery;
+            var laydate = layui.laydate;
+            
+            //初始化插件时间区间
+            var initStartTime = "{:date('Y/m/d',$initStartTime)}";
+            var initEndTime = "{:date('Y/m/d',$initEndTime)}";
+
+            laydate.render({
+                elem: '#test1' //指定元素
+                ,range:true
+                ,format: 'yyyy/MM/dd'
+                ,value: initStartTime+' - '+initEndTime
+                ,min: -1000 //7天前
+                ,max: 0
+                ,calendar: true
+            });
+
+            //新用户
+            var timesArr1 = getArray('times1');
+            var newUserArr1 = getArray('newUser');
+            var oldUserArr1 = getArray('oldUser');
+            //console.log(timesArr1,countArr1);
+            var obj1 = {
+                id:'echarts-bar-user',
+                title:'新老用户',
+                subTitle:['新用户','老用户'],
+                x:timesArr1,
+                name1:'新用户',
+                data1:newUserArr1,
+                name2:'老用户',
+                data2:oldUserArr1,
+            }
+            ui.bar(obj1);
+
+            //充值
+            var timesArr2 = getArray('times2');
+            var countArr2 = getArray('count2');
+            //console.log(timesArr2,countArr2);
+            var obj2 = {
+                id:'echarts-line-pay',
+                title:'充值数量',
+                x:timesArr2,
+                name:'充值',
+                data:countArr2
+            }
+            ui.line(obj2);
+
+            //房卡 房间
+            var timesArr3 = getArray('times3');
+            var cardArr = getArray('card');
+            var roomArr = getArray('room');
+            //console.log(timesArr3,cardArr,roomArr);
+            var obj3 = {
+                id:'echarts-line-card',
+                title:'房卡消耗',
+                x:timesArr3,
+                name:'房卡消耗',
+                data:cardArr
+            }
+            ui.line(obj3);
+            var obj4 = {
+                id:'echarts-line-room',
+                title:'房间数量',
+                x:timesArr3,
+                name:'房间数量',
+                data:roomArr
+            }
+            ui.line(obj4);
+
+        });
+        
+        //搜索
+        function searchs(){
+            var agent = $.trim($('select[name="agent"]').val());
+            var time = $.trim($('input[name="time"]').val());
+            var gameType = $.trim($('select[name="gameType"]').val());
+            console.log(agent,time,gameType);
+            if(time == null){
+                layer.msg('请选择时间',{'icon':2,'anim':2});
+                return;
+            }
+            arr = time.split(' - ');
+            //console.log(arr);
+            startTime = arr[0];
+            endTime = arr[1];
+            var url = "/admins.php/admins/count/spreadData?agent="+agent+"&gameType="+gameType+"&startTime="+startTime+"&endTime="+endTime;
+            window.location.href = url;
+        }
+
+        function getArray(ClassName){
+            var arr = [];
+            var aDiv=document.getElementsByClassName(ClassName);
+            //console.log(aDiv);
+            for(let i = 0 ; i<aDiv.length;i++){
+                arr.push(aDiv[i].value);
+            }
+            return arr;
+        }
+        function getSum(arr){
+            var he = 0;
+            for(var i = 0 ; i < arr.length; i++){
+                he += parseInt(arr[i]);
+            }
+            return he;
+        }
+        function getType(titleArr=array(),typeArr=array()){
+            var arr = [];
+            for(var i=0;i<titleArr.length;i++){
+                var obj = new Object;
+                obj.value = typeArr[i];
+                obj.name = titleArr[i];
+                arr.push(obj);
+            }
+            return arr;
+        }
+        
+    </script>
+</body>
+</html>

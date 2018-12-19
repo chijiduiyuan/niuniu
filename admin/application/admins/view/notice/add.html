@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+		<div class="layui-form-item">
+            <label class="layui-form-label">平台</label>
+            <div class="layui-input-block">
+                <select name="agent" lay-verify="">
+					<option value="0">请选择一个平台</option>
+					{volist name="agentList" id="vv"}
+					<option value="{$vv.id}">{$vv.title}</option>
+					{/volist}
+				</select>
+            </div>
+		</div>
+        <div class="layui-form-item">
+			<label class="layui-form-label">内容</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="content" value="">
+			</div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-inline">
+                <input type="radio" layui-skin="primary" name="status" title="发布"  value="1" checked>
+				<input type="radio" layui-skin="primary" name="status" title="不发布"  value="0" >
+			</div>
+		</div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+	});
+
+    // 保存
+	function save(){
+        var agent = $.trim($('select[name="agent"]').val());
+		if(agent == 0){
+            layer.msg('请选择平台',{'icon':2,'anim':6});
+			return;
+        }
+        var content = $.trim($('input[name="content"]').val());
+        if(content == ""){
+            layer.msg('请输入公告内容',{'icon':2,'anim':6});
+			return;
+        }
+		$.post('/admins.php/admins/Notice/addSave',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+	}
+</script>

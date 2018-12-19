@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>修改玩家</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+		<div class="layui-form-item">
+			<label class="layui-form-label">UID:</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="uid" value="{:isset($userInfo.uid)?$userInfo.uid:''}" readonly>
+			</div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">昵称:</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="nickname" value="{:isset($userInfo.nickname)?$userInfo.nickname:''}" readonly>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">剩余房卡(张):</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="card" value="{:isset($userInfo.card)?$userInfo.card:''}" readonly>
+			</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">充值数量(张):</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="num" value="">
+            </div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label">充值价格(元):</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="price" value="">
+            </div>
+        </div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+	});
+
+    //充值
+    function save(){
+        var num = $.trim($('input[name="num"]').val());
+        var price = $.trim($('input[name="price"]').val());
+        if(num == ''){
+            layer.msg('请输入充值数量',{'icon':2,'anim':6});
+			return;
+        }
+		if(num <= 0){
+			layer.msg('数量必须大于0',{'icon':2,'anim':6});
+			return;
+		}
+        if(price == ''){
+            layer.msg('请输入充值价格',{'icon':2,'anim':6});
+			return;
+        }
+        $.post('/admins.php/admins/user/paySave',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+    }
+</script>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style type="text/css">
+		.header span{background: #009688;margin-left: 30px;padding: 10px;color:#ffffff;}
+		.header div{border-bottom: solid 2px #009688;margin-top: 8px;}
+		.header button{float: right;margin-top: -5px;}
+        .margin-top-div{margin-top: 20px;}
+        .border-3{border: 2px solid #009688;}
+        .border-left-1{border: 1px solid #009688;}
+	</style>
+</head>
+<body>
+    <div class="header">
+		<span>房间详情</span>
+		<button class="layui-btn layui-btn-sm" onclick="back()">返回</button>
+		<div></div>
+    </div>
+    
+    <div class="layui-container margin-top-div">
+        <div class="layui-row border-3">
+            <div class="layui-col-md3">
+                房间规则
+            </div>
+            <div class="layui-col-md9 border-left-1">
+                <ul class="">
+                    <li>
+                        房间号:{$data.room.id}
+                    </li>
+                    <li>
+                        玩法：{$data.room.conf.wanfa}
+                    </li>
+                    <li>
+                        底分：{$data.room.conf.difen}分
+                    </li>
+                    <li>
+                        规则：{$data.room.conf.guize}
+                    </li>
+                    <li>
+                        特殊牌型：{$data.teshu}
+                    </li>
+                    <li>
+                        下注倍数：{$data.room.conf.beishu}
+                    </li>
+                    <li>
+                        时间：{$data.room.conf.shijian}
+                    </li>
+                    <li>
+                        上庄：{$data.room.conf.shangzhuang}
+                    </li>
+                    <li>
+                        局数：{$data.room.conf.jushu}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-container margin-top-div">
+        <div class="layui-row">
+            排行榜
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>玩家</th>
+                    <th>分数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {volist name='$data.rank' id='va' key="k"}
+                <tr>
+                    <td>{$k}</td>
+                    <td>
+                        <div style="float:left;">
+                            <img src="{$va.uid.avatar}" style="width:60px;"/>
+                        </div>
+                        <div style="float:left;">
+                            <p>{$va.uid.uid}</p>
+                            <p>{$va.uid.nickname}</p>
+                        </div>
+                    </td>
+                    <td>{$va.score}</td>
+                </tr>
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="layui-container margin-top-div">
+        {volist name='$data.match' id='vv'}
+        <div class="layui-row">
+            <div>
+                第{$vv.current_num}局
+            </div>
+            <div>
+                <table class="layui-table">
+                    <thead>
+                        <tr>
+                            <th>玩家</th>
+                            <th>庄家</th>
+                            <th>倍数</th>
+                            <th>手牌</th>
+                            <th>牌型</th>
+                            <th>分数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name='$vv.result' id='va'}
+                        <tr>
+                            <td>{$va.uid}</td>
+                            <td>
+                                {$vv['extInfo'][$va['uid']]['isbanker'] ==  1 ? '<img src="__STATIC__/images/fangzhu.png" style="width:30px"/>' : ''}
+                            </td>
+                            <td>
+                                {$vv['extInfo'][$va['uid']]['isbanker'] ==  1 ? '抢庄倍数:' : '下注倍数:'}{$vv['extInfo'][$va['uid']]['rate']}
+                            </td>
+                            <td>
+                                <img src="__STATIC__/images/pai/{$vv['extInfo'][$va['uid']]['porkList'][0]['name']}.png" style="width:30px;height:40px;"/>
+                                <img src="__STATIC__/images/pai/{$vv['extInfo'][$va['uid']]['porkList'][1]['name']}.png" style="width:30px;height:40px;"/>
+                                <img src="__STATIC__/images/pai/{$vv['extInfo'][$va['uid']]['porkList'][2]['name']}.png" style="width:30px;height:40px;"/>
+                                <img src="__STATIC__/images/pai/{$vv['extInfo'][$va['uid']]['porkList'][3]['name']}.png" style="width:30px;height:40px;margin-left:20px;"/>
+                                <img src="__STATIC__/images/pai/{$vv['extInfo'][$va['uid']]['porkList'][4]['name']}.png" style="width:30px;height:40px;"/>
+                            </td>
+                            <td><img src="__STATIC__/images/bullfight_type{$vv['extInfo'][$va['uid']]['niu']}.png" /></td>
+                            <td>{$va.score}</td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {/volist}
+    </div>
+    <script>
+        layui.use(['layer','laypage'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+		});
+        function back(){
+            window.location.href = "/admins.php/admins/Room/index";
+        }
+    </script>
+</body>
+</html>

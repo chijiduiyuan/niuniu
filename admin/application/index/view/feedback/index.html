@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>意见反馈</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style>
+        *{margin: 0;padding: 0;}
+        html,body{width: 100%;height: 100%;}
+        body{position: absolute;top: 0;left: 0;}
+        .back{width: 2rem;height: 2rem;}
+        .feed-type{text-align: center;height: 1.5rem;line-height: 1.5rem;}
+        .font-color{color: #e8b917;}
+        textarea{width: 80%;}
+    </style>
+</head>
+<body>
+    <div class="layui-row">
+        <img src="__STATIC__/images/back.png" onclick="back()" class="back"/>
+    </div>
+
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label font-color">意见类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="type" value="1" title="意见反馈" checked>
+                <input type="radio" name="type" value="2" title="违法举报" >
+                <input type="radio" name="type" value="3" title="游戏建议" >
+                <input type="radio" name="type" value="4" title="房卡问题" >
+                <input type="radio" name="type" value="5" title="掉线问题" >
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label font-color">意见内容</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea content"></textarea>
+            </div>
+        </div>
+    </form>
+
+    <div class="layui-row">
+        <div class="layui-col-xs6">
+            <div class="layui-row6 layui-col-xs-offset3">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="feed()">提交反馈</button>
+            </div>
+        </div>
+        <div class="layui-col-xs6">
+            <div class="layui-row6 layui-col-xs-offset5">
+                <button class="layui-btn layui-btn-radius layui-btn-primary" onclick="myFeed()">我的反馈</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        layui.use(['element','form'], function(){
+            var element = layui.element;
+            var form = layui.form;
+            layer = layui.layer;
+			$ = layui.jquery;
+        });
+
+        function back(){
+            window.location.href = "/index.php/index/Personal/index";
+        }
+
+        function feed(){
+            var type = $.trim($('input[name="type"]').val());
+            if(type == ''){
+                layer.msg('请选择类型',{'icon':2,'anim':6});
+                return;
+            }
+            var content = $.trim($('.content').val());
+            if(content == ''){
+                layer.msg('请输入内容',{'icon':2,'anim':6});
+                return;
+            }
+            $.post('/index.php/index/Feedback/feedAjax',{'type':type,'content':content},function(res){
+                if(res.code == 0){
+                    layer.msg(res.msg,{'icon':2,'anim':6});
+                    return;
+                }else{
+                    layer.msg(res.msg,{'icon':1});
+                    setTimeout(function(){
+                        window.location.href = '/index.php/index/Feedback/index'
+                    },1000);
+                }
+            },'json');
+        }
+
+        function myFeed(){
+            window.location.href = "/index.php/index/Feedback/myfeed";
+        }
+
+    </script>
+</body>
+</html>

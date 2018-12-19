@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>创建房间</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+	<style>
+		.wanfa{height: 4.5rem;}
+	</style>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+		<input type="hidden" name="gameId" value="{$game.id}">
+		<!--底分-->
+        <div class="layui-row">
+            <div class="layui-col-xs2">底分:</div>
+            <div class="layui-col-xs10">
+                <input type="radio" name="difen" value="4" title="4分" checked>
+                <input type="radio" name="difen" value="8" title="8分">
+                <input type="radio" name="difen" value="10" title="10分">
+                <input type="radio" name="difen" value="16" title="16分">
+                <input type="radio" name="difen" value="20" title="20分">
+                <input type="radio" name="difen" value="40" title="40分">
+            </div>
+        </div>
+        <!--筹码-->
+        <div class="layui-row">
+            <div class="layui-col-xs2">筹码:</div>
+            <div class="layui-col-xs10">
+                <input type="radio" name="chouma" value="1" title="2/4,4/8,8/16,10/20" checked>
+                <input type="radio" name="chouma" value="2" title="2/4,5/10,10/20,20/40">
+            </div>
+        </div>
+        <!--规则-->
+        <div class="layui-row">
+            <div class="layui-col-xs2">规则:</div>
+            <div class="layui-col-xs10">
+                <input type="radio" name="guize" value="1" title="闷牌,全场禁止比牌">
+            </div>
+        </div>
+        <!--看牌-->
+        <div class="layui-row">
+            <div class="layui-col-xs2">看牌:</div>
+            <div class="layui-col-xs10">
+                <input type="radio" name="kanpai" value="1" title="无" checked>
+                <input type="radio" name="kanpai" value="2" title=">=100分">
+                <input type="radio" name="kanpai" value="3" title=">=300分">
+                <input type="radio" name="kanpai" value="4" title=">=500分">
+            </div>
+        </div>
+        <!--比牌-->
+        <div class="layui-row">
+            <div class="layui-col-xs2">比牌:</div>
+            <div class="layui-col-xs10">
+                <input type="radio" name="bipai" value="1" title="无" checked>
+                <input type="radio" name="bipai" value="2" title=">=100分">
+                <input type="radio" name="bipai" value="3" title=">=300分">
+                <input type="radio" name="bipai" value="4" title=">=500分">
+            </div>
+        </div>
+        <!--上限-->
+        <div class="layui-row">
+            <div class="layui-col-xs2">上限:</div>
+            <div class="layui-col-xs10">
+                <input type="radio" name="shangxian" value="1" title="无" checked>
+                <input type="radio" name="shangxian" value="2" title="500">
+                <input type="radio" name="shangxian" value="3" title="1000">
+                <input type="radio" name="shangxian" value="4" title="2000">
+            </div>
+        </div>
+        <!--局数-->
+        <div class="layui-row">
+            <div class="layui-col-xs2">局数:</div>
+            <div class="layui-col-xs10">
+                <input type="radio" name="jushu" value="1" title="10局x1房卡" checked>
+                <input type="radio" name="jushu" value="2" title="20局x2房卡">
+            </div>
+        </div>
+	</form>
+
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="create()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer','element'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+		var element = layui.element;
+	});
+
+	//创建房间
+	function create(){
+		var gameId = $.trim($('input[name="gameId"]').val());
+		if(!gameId){
+			layer.msg('请重新选择游戏',{'icon':2,'anim':6});
+			return;
+		}
+		var difen = $.trim($('input[name="difen"]:checked').val());
+		var chouma = $.trim($('input[name="chouma"]:checked').val());
+        var guize = $.trim($('input[name="guize"]:checked').val())?1:0;
+        var kanpai = $.trim($('input[name="kanpai"]:checked').val());
+        var bipai = $.trim($('input[name="bipai"]:checked').val());
+        var shangxian = $.trim($('input[name="shangxian"]:checked').val());
+		var jushu = $.trim($('input[name="jushu"]:checked').val());
+		var needHouseCard = 0;
+		if(jushu == 1){
+			needHouseCard = 1;
+		}else if(jushu == 2){
+			needHouseCard = 2;
+		}
+		var conf = {
+				'difen' : difen,
+				'chouma' : chouma,
+				'guize' : guize,
+				'kanpai' : kanpai,
+				'bipai' : bipai,
+				'shangxian' : shangxian,
+				'jushu' : jushu
+			}
+		$.post('/index.php/index/index/createAjax',{gameId:gameId,conf:JSON.stringify(conf),needHouseCard:needHouseCard},function(res){
+			if(res.code > 0){
+				layer.msg(res.msg,{'icon':2,'anim':6});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.href = '/index.php/index/index/wait?roomId='+res.data;},1000);
+			}
+		},'json')
+	}
+
+</script>

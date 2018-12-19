@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登陆</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style>
+        *{margin: 0;padding: 0;}
+        html{width: 100%;height: 100%;}
+        body{background:url('__STATIC__/images/bg.png') 100% 100%;background-size: 100% 100%;}
+        .main{width: 90%;height: 40%;background: #fff;position: fixed;left: 5%;top: 25%;border-radius: 10px;}
+        .main .nav{width:100%;height: 100%;}
+        .nav .title{width:100%;height: 20%;}
+        .title .login-li{width:45%;height: 100%;font-size: 3rem;line-height: 6rem;}
+        .blue{color: #1E9FFF;border-bottom: 4px solid #1E9FFF;}
+        .nav .content{width:100%;height: 80%;}
+        .wx-login,.dx-login{width:100%;height:100%;text-align: center;font-size: 2rem;overflow: hidden;}
+        .wx-login-top{margin: 0;margin-top: 15%;height:40%;}
+        .wx-login-bottom{margin: 0;height:20%;}
+        .wx-auth,.btn-login{background:#5FB878;width:80%;height: 80%;border-radius: 4px;font-size: 2rem;}
+        .username-pwd-login,.phone-code-login{width: 100%;height: 100%;overflow: hidden;}
+        .phone-code-login{display: none;}
+        .row-div{width: 100%;height: 20%;margin-top: 2%;}
+        .row-div div{height: 6rem;line-height: 6rem;font-size: 2rem;}
+        input{width: 80%;height: 4rem;margin-top: 1rem;border: 1px solid #2F4056;}
+        .phone-code-tab p,.username-pwd-tab p{float: right;margin-right: 20%;}
+        .code{width: 60%;float: left;margin-left: 10%;}
+        .btn-send-code-div{width: 20%;float: left;}
+        .btn-send-code{width: 80%;height: 60%;margin: 10%;font-size: 1rem;}
+    </style>
+</head>
+<body>
+    <div class="main">
+       <div class="layui-tab nav" lay-filter="demo">
+
+            <ul class="layui-tab-title title">
+                <li class="layui-this login-0 login-li" >进入游戏</li>
+                <li class="login-1 login-li" >防伪登陆</li>
+            </ul>
+
+            <div class="layui-tab-content content">
+                <!--微信登陆-->
+                <div class="layui-tab-item layui-show wx-login">
+                    <div class="layui-input-block wx-login-top">
+                        为了您的账号信息安全<br>建议使用防伪登陆
+					</div>
+                    <div class="layui-input-block wx-login-bottom">
+						<button class="layui-btn wx-auth" onclick="wxAuth()">直接进入游戏</button>
+					</div>
+                </div>
+                <!--短信登陆/账号密码登陆-->
+                <div class="layui-tab-item dx-login">
+                    <!--账号密码登陆-->
+                    <div class="layui-container username-pwd-login">
+                        <div class="layui-row row-div">
+                            <div class="layui-col-xs2">
+                                账号:
+                            </div>
+                            <div class="layui-col-xs10">
+                                <input type="text" name="username" value="" placeholder="请输入6位数uid" />
+                            </div>
+                        </div>
+                        <div class="layui-row row-div">
+                            <div class="layui-col-xs2">
+                                密钥:
+                            </div>
+                            <div class="layui-col-xs10">
+                                <input type="password" name="password" value="" placeholder="请输入6-18位数字或字母密码" />
+                            </div>
+                        </div>
+                        <!-- <div class="layui-row row-div phone-code-tab"><p>短信登陆</p></div> -->
+                        <div class="layui-row row-div">
+                            <button class="layui-btn btn-login" onclick="dologin()">防伪登陆</button>
+                        </div>
+                    </div>
+                    <!--短信登陆-->
+                    <!-- <div class="layui-container phone-code-login">
+                        <div class="layui-row row-div">
+                            <input type="text" name="phone" placeholder="请输入手机号" />
+                        </div>
+                        <div class="layui-row row-div">
+                            <input type="text" name="code" placeholder="请输入验证码" class="code"/>
+                            <div class="btn-send-code-div">
+                                <button class="layui-btn btn-send-code">发送短信</button>
+                            </div>
+                        </div>
+                        <div class="layui-row row-div username-pwd-tab"><p>账号密码登陆</p></div>
+                        <div class="layui-row row-div">
+                            <button class="layui-btn btn-login">防伪登陆</button>
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+	<script type="text/javascript">
+		layui.use(['element','form'], function(){
+            var element = layui.element;
+            var form = layui.form;
+            $ = layui.jquery;
+            $('.login-0').addClass('blue');
+            element.on('tab(demo)', function(data){
+                //console.log(data.index);
+                var index = data.index;
+                tab(index);
+            });
+            // $('.phone-code-tab').click(function(){
+            //     $('.username-pwd-login').hide();
+            //     $('.phone-code-login').show();
+            // })
+            // $('.username-pwd-tab').click(function(){
+            //     $('.username-pwd-login').show();
+            //     $('.phone-code-login').hide();
+            // })
+        });
+
+        function tab(index){
+            $('.login-'+index).addClass('blue').siblings().removeClass('blue');
+        }
+        //微信登陆
+        function wxAuth(){
+            window.location.href = '/index.php/index/Weixin/Oauth';
+        }
+        //帐号密码登陆
+        function dologin(){
+            var username = $.trim($('input[name="username"]').val());
+			var password = $.trim($('input[name="password"]').val());
+            if(username == ""){
+                layer.msg('请输入账号',{'icon':2,'anim':6});
+                return;
+            }
+            if(password == ""){
+                layer.msg('请输入密钥',{'icon':2,'anim':6});
+                return;
+            }
+            // if(username.length == 11){
+            //     if(!(/^1[34578]\d{9}$/.test(username))){
+            //         layer.msg('手机号格式不正确',{'icon':2,'anim':6});
+            //         return;
+            //     }
+            // }
+            if(!/^[a-zA-Z0-9]{6,18}$/.test(password)){
+                layer.msg('密码格式不正确',{'icon':2,'anim':6});
+                return;
+            }
+            $.post('/index.php/index/Login/loginAjax',{username:username,password:password},function(res){
+                if(res.code==0){
+                    layer.msg(res.msg,{'icon':2,'anim':2});
+                }else{
+                    layer.msg(res.msg,{'icon':1});
+                    setTimeout(function(){
+                        window.location.href = '/index.php/index/Index/index'
+                    },1000);
+                }
+            },'json');
+        }
+
+        
+	</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大厅</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style>
+        *{margin: 0;padding: 0;color: #f5f5f5;}
+        html{width: 100%;height: 100%;}
+        body{position: absolute;top: 0;left: 0;background:url('__STATIC__/images/bg.png') 100% 100%;background-size: 100% 100%;}
+        .header{height:5rem;background:url('__STATIC__/images/user_bg.png') 100% 100%;background-size: 100% 100%;}
+        .avatar-bg{width: 4rem;height: 4rem;margin-top: 0.5rem;}
+        .avatar{width: 86%;height: 86%;margin: 7%;}
+        .user-bg{margin-top: 0.5rem;}
+        .btn-intro{max-height: 1rem;line-height: 1rem;max-width: 6rem;}
+        .logo{text-align: center;}
+        .music{width: 2rem;height: 2rem;margin-top: 1.5rem;}
+        .icon{width: 2rem;height: 4rem;margin-top: 0.5rem;background: url('__STATIC__/images/icon.png') 100% 100%;background-size: 100% 100%;font-size: 1.1rem;}
+        .notice{height: 1.5rem;background: rgba(0, 0, 0, 0.3);margin-top: 0.5rem;}
+        .game{width:10rem;height: 5rem;margin: 1rem 0;}
+        .layui-layer-title{text-align: center;}
+        
+        .margin-null{margin-bottom: 4rem;}
+        .btom{background: url('__STATIC__/images/tabbar_bottom.png') 100% 100%;background-size: 100% 100%;width: 100%;height: 4rem;position: fixed;left: 0;bottom: 0;}
+        .tab{width: 40%;height: 3rem;display: inline-block;margin: 0.5rem 30%;}
+        .tab img{width: 3rem;height: 3rem;}
+    </style>
+</head>
+<body>
+        <!--头部-->
+        <div class="layui-container header">
+            <div class="layui-row">
+                <div class="layui-col-xs10">
+                    <div class="layui-col-xs3">
+                        <div class="avatar-bg">
+                            <img src="{$data.user.avatar}" class="avatar"/>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs9">
+                        <div class="user-bg">
+                            <div class="layui-row">
+                                {$data.user.nickname}
+                            </div>
+                            <div class="layui-row">
+                                个人宣言:{:isset($data.user.intro) ? $data.user.intro:'<button class="layui-btn layui-btn-primary btn-intro" onclick="setIntro();">暂未设置</button>'}
+                            </div>
+                            <div class="layui-row">
+                                房卡:{$data.user.card}张
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs2">
+                    <div class="layui-col-xs6 logo">
+                        <p class="icon">{$data.user.agent.title}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--公告部分-->
+        <div class="layui-row notice">
+            <marquee direction='up'  scrolldelay="10" scrollamount="1" loop="-1" behavior="scroll" hspace="20" vspace="10" onMouseOver="this.stop()" onMouseOut="this.start()" width="100%" height="100%" style="text-align:center;">
+                {volist name="data.notice" id="vv"}
+                <p>{$vv.content}</p>
+                {/volist}
+            </marquee>
+        </div>
+        <!--游戏部分-->
+        <div class="layui-container">
+            <div class="layui-row">
+                {volist name="data.game" id="vv"}
+                <div class="layui-col-xs6 logo" >
+                    <img src="__STATIC__/images/game/{$vv.pic}" class="game" onclick="createRoom({$vv.id})"/>
+                </div>
+                {/volist}
+            </div>
+        </div>
+        <!--撑开底部-->
+        <div class="margin-null"></div>
+        <!--底部导航-->
+        <div class="btom">
+            <div class="layui-row">
+                <div class="layui-col-xs4">
+                    <a href="###" class="tab"><img src="__STATIC__/images/tab_shop_nor.png" /></a>
+                </div>
+                <div class="layui-col-xs4">
+                    <a href="###" class="tab"><img src="__STATIC__/images/tab_club_nor.png" /></a>
+                </div>
+                <div class="layui-col-xs4">
+                    <a href="/index.php/index/Personal/index" class="tab"><img src="__STATIC__/images/tab_me_nor.png" /></a>
+                </div>
+            </div>
+        </div>
+
+    
+    <script>
+        layui.use(['layer','form'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+		});
+        //设置个人宣言
+        function setIntro(){
+            layer.prompt({title: '输入个人宣言(10个字符以内)', formType: 1}, function(text, index){
+                if(text == ""){
+                    layer.msg('请输入个人宣言',{'icon':2,'anim':6});
+                    return;
+                }
+                $.post('/index.php/index/Index/createIntro',{intro:text},function(res){
+                    if(res.code == 0){
+                        layer.msg(res.msg,{'icon':2,'anim':6});
+                        return;
+                    }else{
+                        layer.msg(res.msg,{'icon':1});
+                        setTimeout(function(){
+                            window.location.href = '/index.php/index/Index/index'
+                        },1000);
+                    }
+                },'json');
+            });
+        }
+
+        //点击创建房间
+		function createRoom(id){
+			layer.open({
+                type: 2,
+                title: '创建房间',
+                shade: 0.3,
+                area: ['95%', '80%'],
+                content: '/index.php/index/Index/createRoom?id='+id
+			});
+		}
+    </script>
+</body>
+</html>

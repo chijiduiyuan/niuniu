@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>礼包记录</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style>
+       *{margin: 0;padding: 0;}
+        html,body{width: 100%;height: 100%;}
+        body{position: absolute;top: 0;left: 0;}
+        .back{width: 2rem;height: 2rem;}
+        .layui-tab-title{width: 60%;margin-left: 20%;border: none;}
+        .layui-this{background-color: #FFB800;color: #f5f5f5;}
+        .info{width: 90%;margin-left: 5%;border-top: 1px solid #000;height: 4rem;}
+        .info p{height: 2rem;line-height: 2rem;}
+    </style>
+</head>
+<body>
+    <div class="layui-row">
+        <img src="__STATIC__/images/back.png" onclick="back()" class="back"/>
+    </div>
+
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">发出房卡</li>
+            <li>收到房卡</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <?php if(isset($data['send'])){ ?>
+                {volist name="data.send" id="vv"}
+                <div class="layui-row info">
+                    <div class="layui-col-xs10">
+                        <p>{$vv.sender.nickname}</p>
+                        <p>{:date('Y-m-d H:i:s',$vv.send_time)}</p>
+                    </div>
+                    <div class="layui-col-xs2">
+                        <p>{$vv.card_num}张</p>
+                        <p>{:isset($vv.receiver) ? '<button class="layui-btn layui-btn-sm" onclick="cardInfo('.$vv["id"].')">已领取</button>' : '<button class="layui-btn layui-btn-sm layui-btn-primary" onclick="cardInfo('.$vv["id"].')">未领取</button>'}</p>
+                    </div>
+                </div>
+                {/volist}
+                <?php } ?>
+            </div>
+            <div class="layui-tab-item">
+                <?php if(isset($data['receive'])){ ?>
+                {volist name="data.receive" id="vv"}
+                <div class="layui-row info">
+                    <div class="layui-col-xs10">
+                        <p>{$vv.sender.nickname}</p>
+                        <p>{:date('Y-m-d H:i:s',$vv.send_time)}</p>
+                    </div>
+                    <div class="layui-col-xs2">
+                        <p>{$vv.card_num}张</p>
+                        <p><button class="layui-btn layui-btn-sm layui-btn-primary" onclick="cardInfo({$vv.id})">已领取</button></p>
+                    </div>
+                </div>
+                {/volist}
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        layui.use('element', function(){
+            var element = layui.element;
+            layer = layui.layer;
+			$ = layui.jquery;
+        });
+
+        function back(){
+            window.location.href = "/index.php/index/Personal/index";
+        }
+
+        function cardInfo(id){
+            window.location.href = "/index.php/index/Sendcard/send?id="+id;
+        }
+    </script>
+</body>
+</html>

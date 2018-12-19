@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+		<div class="layui-form-item">
+			<label class="layui-form-label">标题</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="title" value="">
+			</div>
+        </div>
+        <div class="layui-form-item">
+			<label class="layui-form-label">主/代</label>
+			<div class="layui-input-block">
+				<input type="radio" layui-skin="primary" name="is_main" title="主平台"  value="1" >
+				<input type="radio" layui-skin="primary" name="is_main" title="代理"  value="0" checked>
+			</div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-inline">
+                <input type="radio" layui-skin="primary" name="status" title="运营"  value="1" checked>
+				<input type="radio" layui-skin="primary" name="status" title="不运营"  value="0" >
+			</div>
+		</div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+	});
+
+    // 保存
+	function save(){
+        var title = $.trim($('input[name="title"]').val());
+        if(title == ""){
+            layer.msg('请输入平台名称',{'icon':2,'anim':6});
+			return;
+        }
+		$.post('/admins.php/admins/agent/addSave',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+	}
+</script>

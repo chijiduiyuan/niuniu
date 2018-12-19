@@ -1,0 +1,617 @@
+[
+  {
+    "__type__": "cc.Prefab",
+    "_name": "",
+    "_objFlags": 0,
+    "_native": "",
+    "data": {
+      "__id__": 1
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Rule",
+    "_objFlags": 0,
+    "_parent": null,
+    "_children": [
+      {
+        "__id__": 2
+      },
+      {
+        "__id__": 6
+      },
+      {
+        "__id__": 9
+      },
+      {
+        "__id__": 14
+      }
+    ],
+    "_active": true,
+    "_level": 1,
+    "_components": [
+      {
+        "__id__": 17
+      }
+    ],
+    "_prefab": {
+      "__id__": 18
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "groupIndex": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "New Layout",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 2,
+    "_components": [
+      {
+        "__id__": 3
+      },
+      {
+        "__id__": 4
+      }
+    ],
+    "_prefab": {
+      "__id__": 5
+    },
+    "_opacity": 111,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 750,
+      "height": 1096
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "groupIndex": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "9bbda31e-ad49-43c9-aaf2-f7d9896bac69"
+    },
+    "_type": 1,
+    "_sizeMode": 0,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_state": 0,
+    "_atlas": null,
+    "_id": "b6D6PJGklJ/Jo2kiT4ChuU"
+  },
+  {
+    "__type__": "cc.Layout",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_layoutSize": {
+      "__type__": "cc.Size",
+      "width": 750,
+      "height": 1096
+    },
+    "_resize": 0,
+    "_N$layoutType": 0,
+    "_N$padding": 0,
+    "_N$cellSize": {
+      "__type__": "cc.Size",
+      "width": 40,
+      "height": 40
+    },
+    "_N$startAxis": 0,
+    "_N$paddingLeft": 0,
+    "_N$paddingRight": 0,
+    "_N$paddingTop": 0,
+    "_N$paddingBottom": 0,
+    "_N$spacingX": 0,
+    "_N$spacingY": 0,
+    "_N$verticalDirection": 1,
+    "_N$horizontalDirection": 0,
+    "_id": "a1Umx5471PTbg0zz9/mJFv"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "5195ed82-84ae-4fbd-b536-ad01364c4634"
+    },
+    "fileId": "11Ezd514JCaIoGuJ7AUa6r",
+    "sync": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "img_jiugongge",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 2,
+    "_components": [
+      {
+        "__id__": 7
+      }
+    ],
+    "_prefab": {
+      "__id__": 8
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 750,
+      "height": 1096
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "groupIndex": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 6
+    },
+    "_enabled": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "7044c155-7674-4d9a-a726-f997beca0609"
+    },
+    "_type": 0,
+    "_sizeMode": 0,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_state": 0,
+    "_atlas": null,
+    "_id": "c4rbfi0HpCB6JSqIe9E9g3"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "5195ed82-84ae-4fbd-b536-ad01364c4634"
+    },
+    "fileId": "18CslaPSVHB6Y296+//pEh",
+    "sync": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "btn_close",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 2,
+    "_components": [
+      {
+        "__id__": 10
+      },
+      {
+        "__id__": 11
+      }
+    ],
+    "_prefab": {
+      "__id__": 13
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 82,
+      "height": 82
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 326,
+      "y": 498,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "groupIndex": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 9
+    },
+    "_enabled": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "ec4ca6a3-3214-4353-9dd8-f6abccf56671"
+    },
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_state": 0,
+    "_atlas": null,
+    "_id": "91iQpIKltD1Khr9ZhWUz0k"
+  },
+  {
+    "__type__": "cc.Button",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 9
+    },
+    "_enabled": true,
+    "transition": 0,
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 211,
+      "g": 211,
+      "b": 211,
+      "a": 255
+    },
+    "hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "duration": 0.1,
+    "zoomScale": 1.2,
+    "clickEvents": [
+      {
+        "__id__": 12
+      }
+    ],
+    "_N$interactable": true,
+    "_N$enableAutoGrayEffect": false,
+    "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 214,
+      "g": 214,
+      "b": 214,
+      "a": 255
+    },
+    "_N$disabledColor": {
+      "__type__": "cc.Color",
+      "r": 124,
+      "g": 124,
+      "b": 124,
+      "a": 255
+    },
+    "_N$normalSprite": null,
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
+    "_N$disabledSprite": null,
+    "_N$target": {
+      "__id__": 9
+    },
+    "_id": "a7Q2xzhxJA+rIXknfzulqz"
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "ClickAndRemove",
+    "handler": "ClickAndRemove",
+    "customEventData": ""
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "5195ed82-84ae-4fbd-b536-ad01364c4634"
+    },
+    "fileId": "3bXZ4j/5pE+JzRswu3QyV2",
+    "sync": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "New Label",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 2,
+    "_components": [
+      {
+        "__id__": 15
+      }
+    ],
+    "_prefab": {
+      "__id__": 16
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 680,
+      "height": 1000
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": -337,
+      "y": -36,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "groupIndex": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 14
+    },
+    "_enabled": true,
+    "_srcBlendFactor": 1,
+    "_dstBlendFactor": 771,
+    "_useOriginalSize": false,
+    "_string": "牌型大小：\n    数字比较：k>q>j>10>9>8>7>6>5>4>3>2>a。\n    花色比较：黑桃>红桃>梅花>方块。\n    牌型比较：无牛<有牛<牛牛<银牛<金牛<炸弹<五小牛。\n    无牛牌型比较：取其中最大的一张牌比较大小，牌大的赢，大小相同比花色。\n    有牛牌型比较：比牛数；牛数相同庄吃闲。\n    牛牛牌型比较：取其中最大的一张牌比较大小，牌大的赢，大小相同比花色。\n   炸弹之间大小比较：取炸弹牌比较大小。\n    五小牛牌型比较：庄吃闲。\n   五小牛>炸弹>五花牛>牛牛>有牛>没牛。\n\n基本规则:\n    牌面分数：10、J、Q、K都为10，其他按牌面数字计算。春、夏、秋、冬、梅、兰、竹、菊按0计算，不算花色。\n    任意3张牌之和为10的整数倍数，如果另外2张牌之和不为10的整数倍数，则根据这2张牌之和的个数为该副牌的牛数。例如（4，6，Q，9，9）牛数为8。\n    任意3张牌之和都不能为10的整数倍数，则判定该副牌无牛。例如（7，8，A，4。J）。\n    任意3张牌之和为10的整数倍数，如果另外2张牌之和也为10的整数倍数，即为牛牛。例如（7，8，5，K，10）\n    计分方式：闲家与庄家比牌，倍数为底分*庄家抢庄倍数*闲家下注倍数*牌型倍数。\n\n游戏流程:\n   准备：所有人都准备直接开始游戏。\n   发牌：明牌抢庄模式发牌，4明1暗。其他玩法不发牌。\n   抢庄：明牌抢庄模式每局都抢庄，倍数为1、2、4、不抢。牛牛上庄第一局抢庄，只有抢、不抢。自由抢庄每局都抢庄，只有抢、不抢。固定庄家第一局抢庄，只有抢、不抢。\n    定庄：倍数最大玩家为庄家，倍数相同随机庄家。牛牛上庄上把有牛牛的玩家为庄家，没有则庄家继续坐庄。固定庄家分数低于房间下线则下庄，房间结束。\n    发牌：除明牌抢庄模式，发牌，3明2暗。\n    下注：闲家下注。\n    看牌：点击看牌。\n    摊牌：摊牌比较牌型，计算分数。\n    ",
+    "_N$string": "牌型大小：\n    数字比较：k>q>j>10>9>8>7>6>5>4>3>2>a。\n    花色比较：黑桃>红桃>梅花>方块。\n    牌型比较：无牛<有牛<牛牛<银牛<金牛<炸弹<五小牛。\n    无牛牌型比较：取其中最大的一张牌比较大小，牌大的赢，大小相同比花色。\n    有牛牌型比较：比牛数；牛数相同庄吃闲。\n    牛牛牌型比较：取其中最大的一张牌比较大小，牌大的赢，大小相同比花色。\n   炸弹之间大小比较：取炸弹牌比较大小。\n    五小牛牌型比较：庄吃闲。\n   五小牛>炸弹>五花牛>牛牛>有牛>没牛。\n\n基本规则:\n    牌面分数：10、J、Q、K都为10，其他按牌面数字计算。春、夏、秋、冬、梅、兰、竹、菊按0计算，不算花色。\n    任意3张牌之和为10的整数倍数，如果另外2张牌之和不为10的整数倍数，则根据这2张牌之和的个数为该副牌的牛数。例如（4，6，Q，9，9）牛数为8。\n    任意3张牌之和都不能为10的整数倍数，则判定该副牌无牛。例如（7，8，A，4。J）。\n    任意3张牌之和为10的整数倍数，如果另外2张牌之和也为10的整数倍数，即为牛牛。例如（7，8，5，K，10）\n    计分方式：闲家与庄家比牌，倍数为底分*庄家抢庄倍数*闲家下注倍数*牌型倍数。\n\n游戏流程:\n   准备：所有人都准备直接开始游戏。\n   发牌：明牌抢庄模式发牌，4明1暗。其他玩法不发牌。\n   抢庄：明牌抢庄模式每局都抢庄，倍数为1、2、4、不抢。牛牛上庄第一局抢庄，只有抢、不抢。自由抢庄每局都抢庄，只有抢、不抢。固定庄家第一局抢庄，只有抢、不抢。\n    定庄：倍数最大玩家为庄家，倍数相同随机庄家。牛牛上庄上把有牛牛的玩家为庄家，没有则庄家继续坐庄。固定庄家分数低于房间下线则下庄，房间结束。\n    发牌：除明牌抢庄模式，发牌，3明2暗。\n    下注：闲家下注。\n    看牌：点击看牌。\n    摊牌：摊牌比较牌型，计算分数。\n    ",
+    "_fontSize": 30,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": null,
+    "_isSystemFontUsed": true,
+    "_spacingX": 0,
+    "_N$horizontalAlign": 0,
+    "_N$verticalAlign": 1,
+    "_N$fontFamily": "Arial",
+    "_N$overflow": 2,
+    "_id": "79+dHodtlKwbACCa7B+AcI"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "5195ed82-84ae-4fbd-b536-ad01364c4634"
+    },
+    "fileId": "eaf8UWRYxPXopFpk3RRCX7",
+    "sync": false
+  },
+  {
+    "__type__": "ca370iLC85FApr9J8W9GoPq",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_id": "2ftw5muLhJ8p5pKSwIBkpR"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "5195ed82-84ae-4fbd-b536-ad01364c4634"
+    },
+    "fileId": "cd5ng+oTlKUICrulIbOK01",
+    "sync": false
+  }
+]

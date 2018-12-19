@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="__STATIC__/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/plugins/bootstrap/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/css/qipai.css" rel="stylesheet" type="text/css" />
+    <script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+    <script src="__STATIC__/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__STATIC__/plugins/bootstrap/js/bootstrap-switch.min.js"></script>
+</head>
+<body>
+<div class="row">
+    <a class="col-sm-4 col-sm-offset-1 btn btn-success" href="/admins.php/admins/hall/roomList">返回</a>
+</div>
+
+    <div class="rule">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1" >
+            <div class="row ruleDiv margin2">
+                <div class="col-sm-3 ruleFont">
+                    房间规则
+                </div>
+                <div class="col-sm-9 margin0">
+                    <ul class="ruleUl">
+                        <li class="">
+                            玩法：{$roomInfo.rule.banker}
+                        </li>
+                        <li>
+                            底分：{$roomInfo.rule.blind}分
+                        </li>
+                        <li>
+                            规则：{$roomInfo.rule.rule}
+                        </li>
+                        <li>
+                            特殊牌型：{$roomInfo.rule.rule}
+                        </li>
+                        <li>
+                            下注倍数：{$roomInfo.rule.times}
+                        </li>
+                        <li>
+                            时间：准备：{$roomInfo.rule.timeOut[0]}秒、抢庄：{$roomInfo.rule.timeOut[1]}秒、下注：{$roomInfo.rule.timeOut[2]}秒、摊牌：{$roomInfo.rule.timeOut[3]}秒
+                        </li>
+                        <li>
+                            上庄：{$roomInfo.rule.rule}
+                        </li>
+                        <li>
+                            局数：{$roomInfo.maxRounds}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="rank">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 text-center rankFont  rankGrop margin2 rankHeight">
+                排行榜
+            </div>
+            <div class="col-sm-10 col-sm-offset-1  rankGrop">
+                <div class="row rankBanner text-center">
+                    <div class="col-sm-1">
+                        排行
+                    </div>
+                    <div class="col-sm-3">
+                        头像
+                    </div>
+                    <div class="col-sm-3">
+                        昵称
+                    </div>
+                    <div class="col-sm-2">
+                        积分
+                    </div>
+                </div>
+                <ul class="text-center">
+                    {volist name="rank" id="vv" key="k"}
+                    <li>
+                        <div class="row">
+                            <div class="col-sm-1">
+                                {$k}
+                            </div>
+                            <div class="col-sm-3">
+                                <img src="{$vv.avatar}" alt="">
+                            </div>
+                            <div class="col-sm-3">
+                                {$vv.nickname}
+                            </div>
+                            <div class="col-sm-2">
+                                {$vv.win}
+                            </div>
+                        </div>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="gambling">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <ul>
+                    {volist name="matchList" id="vv" key="k"}
+                    <li>
+                        <div class="row">
+                            <div class=" text-center rankFont  rankGrop margin2 rankHeight">
+                                第{$k}局
+                            </div>
+                            <div class=" rankGrop">
+                                <div class="row rankBanner text-center">
+                                    <div class="col-sm-2">
+                                        头像
+                                    </div>
+                                    <div class="col-sm-1">
+                                        昵称
+                                    </div>
+                                    <div class="col-sm-2">
+                                        牌
+                                    </div>
+                                    <div class="col-sm-2">
+                                        牌型
+                                    </div>
+                                    <div class="col-sm-1">
+                                        抢庄倍数
+                                    </div>
+                                    <div class="col-sm-1">
+                                        下注倍数
+                                    </div>
+                                    <div class="col-sm-1">
+                                        输赢
+                                    </div>
+                                    <div class="col-sm-1">
+                                        积分
+                                    </div>
+                                </div>
+                                <ul class="text-center">
+                                    {volist name="vv.players" id="va"}
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <img src="{$va.avatar}" alt="">
+                                            </div>
+                                            <div class="col-sm-1">
+                                                {$va.nickname}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="card">
+                                                    {volist name="va.hand" id="vl"}
+                                                    <img src="__STATIC__/images/pai2/{$vl}.png" alt="">
+                                                    {/volist}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <!-- {:isset($va.getBanker)?$va.getBanker:'不抢'} -->
+                                            </div>
+                                            <div class="col-sm-1">
+                                                {$va.bet}
+                                            </div>
+                                            <div class="col-sm-1">
+                                                {$va.win}
+                                            </div>
+                                            <div class="col-sm-1">
+                                                {$va.points}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {/volist}
+                                   
+                                </ul>
+                            </div>
+
+                        </div>
+                    </li>
+                    {/volist}
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

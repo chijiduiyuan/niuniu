@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>赠送房卡</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style>
+        *{margin: 0;padding: 0;}
+        html,body{width: 100%;height: 100%;}
+        body{position: absolute;top: 0;left: 0;background:url('__STATIC__/images/bg_sendCards.jpg') 100% 100%;background-size: 100% 100%;}
+        .card-content{background:url('__STATIC__/images/img_package.png') 100% 100%;background-size: 100% 100%;width: 80%;height: 25rem;margin-top: 30%;margin-left: 10%;text-align: center;overflow: hidden;}
+        .yuan{margin-top: 2rem;}
+        .yuan p,.btn-join p{width: 4rem;height: 4rem;border-radius: 2rem;text-align: center;line-height: 4rem;display: inline-block;background-color: #FFCB60;color: #B8702B;font-weight: 700;}
+        .nickname{margin-top: 4rem;}
+        .card{margin-top: 1rem;}
+        .card p{font-size: 1.5rem;font-weight: 700;}
+        .btn-join{margin-top:2rem;}
+    </style>
+</head>
+<body>
+    <div class="layui-row">
+        <img src="__STATIC__/images/back.png" onclick="back()" class="back"/>
+    </div>
+
+    <div class="layui-row">
+        <div class="card-content">
+            <div class="layui-row yuan">
+                <p>邀</p>
+            </div>
+            <div class="layui-row nickname">
+                <p>{$data.user.nickname}邀请您加入</p>
+            </div>
+            <div class="layui-row card">
+                <p>{$data.user.uid}公会</p>
+            </div>
+            <div class="layui-row btn-join">
+                <p onclick="joinQun()">加入</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        layui.use(['layer'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+		});
+
+        //返回上一级
+        function back(){
+            window.location.href = "/index.php/index/Personal/index";
+        }
+
+        //加入
+        function joinQun(){
+            var qun_id = "{$data.user.uid}";
+            $.post('/index.php/index/Invite/join',{qun_id:qun_id},function(res){
+                if(res.code == 0){
+                    layer.msg(res.msg,{'icon':2,'anim':6});
+                    return;
+                }else{
+                    setTimeout(function(){
+                        window.location.href = "/index.php/index/Personal/index";
+                    },1000);
+                }
+            },'json')
+        }
+    </script>
+</body>
+</html>

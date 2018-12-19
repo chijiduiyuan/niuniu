@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style type="text/css">
+		.header span{background: #009688;margin-left: 30px;padding: 10px;color:#ffffff;}
+		.header div{border-bottom: solid 2px #009688;margin-top: 8px;}
+	</style>
+</head>
+<body>
+    <div class="header">
+		<span>玩家列表</span>
+		<div></div>
+	</div>
+
+	<table class="layui-table">
+		<thead>
+			<tr>
+				<th>UID</th>
+				<th>平台</th>
+				<th>头像</th>
+				<th>昵称</th>
+				<th>房卡数量</th>
+				<th>电话</th>
+				<th>状态</th>
+				<th>创建时间</th>
+				<th>登陆时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="data.data.lists" id="vv"}
+			<tr>
+				<td>{$vv.uid}</td>
+				<td>{$vv.agent.title}</td>
+				<td><img src="{:isset($vv.avatar)?$vv.avatar:''}" alt="" style="width:50px;height:50px;"></td>
+				<td>{$vv.nickname}</td>
+				<td>{$vv.card}</td>
+				<td>{:isset($vv.phone)?$vv.phone:''}</td>
+				<td>{:isset($vv.status) && $vv.status == 1? "正常":"<span style='color:red'>封号</span>"}</td>
+				<td>{:date('Y-m-d H:i:s',$vv.create_time)}</td>
+				<td>{:date('Y-m-d H:i:s',$vv.login_time)}</td>
+				<td>
+					<button class="layui-btn layui-btn-xs btn-edit"  onclick="edit({$vv.uid})">编辑</button>
+					<button class="layui-btn layui-btn-danger layui-btn-xs " onclick="pay({$vv.uid})">充值</button>
+				</td>
+			</tr>
+			{/volist}
+		</tbody>
+    </table>
+    <div id="pages"></div>
+
+
+    <script>
+        layui.use(['layer','laypage'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+			laypage = layui.laypage;
+
+			laypage.render({
+			    elem: 'pages',
+				count:{$data.data.total},               //数据总数
+				limit:{$data.perPage},                //每页显示的条数
+				curr:{$data.current},
+				jump: function(obj, first){
+			    if(!first){
+			    	searchs(obj.curr);
+			    }
+			  }
+			});
+		});
+
+        function searchs(curpage){
+            var url = "/admins.php/admins/User/index?page="+curpage;
+            window.location.href = url;
+        }
+        //修改玩家资料
+		function edit(uid){
+			layer.open({
+			  type: 2,
+			  title: '编辑玩家资料',
+			  shade: 0.3,
+			  area: ['500px', '350px'],
+			  content: '/admins.php/admins/User/edit?uid='+uid
+			});
+		}
+
+        //充值
+        function pay(uid){
+			layer.open({
+			  type: 2,
+			  title: '房卡充值',
+			  shade: 0.3,
+			  area: ['500px', '450px'],
+			  content: '/admins.php/admins/User/pay?uid='+uid
+			});
+		}
+    </script>
+</body>
+</html>

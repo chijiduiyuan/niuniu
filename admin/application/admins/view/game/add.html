@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+		<div class="layui-form-item">
+            <label class="layui-form-label">平台</label>
+            <div class="layui-input-block">
+                <select name="agent" lay-verify="">
+					<option value="0">请选择一个平台</option>
+					{volist name="agentList" id="vv"}
+					<option value="{$vv.id}">{$vv.title}</option>
+					{/volist}
+				</select>
+            </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">游戏名称</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="title" value="">
+			</div>
+        </div>
+        <div class="layui-form-item">
+			<label class="layui-form-label">游戏类型</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="type" value="">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">游戏代码</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="code" value="">
+			</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="order" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">最大人数</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="max_player" value="">
+            </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">游戏图片</label>
+			<div class="layui-input-inline">
+				<button class="layui-btn layui-btn-sm" onclick="return false;" id="upload_img"><i class="layui-icon">&#xe67c;</i>上传图片</button>
+				<img id="pre_img" style="height: 30px;" />
+				<input type="hidden" name="pic" value="">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-inline">
+                <input type="radio" layui-skin="primary" name="status" title="上线"  value="1" checked>
+				<input type="radio" layui-skin="primary" name="status" title="下线"  value="0" >
+			</div>
+		</div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer','upload'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+		var upload = layui.upload;
+   
+		 //执行实例
+		var uploadInst = upload.render({
+			elem: '#upload_img' //绑定元素
+			,url: '/admins.php/admins/Game/upload' //上传接口
+			,accept:'images'
+			,done: function(res){
+			  //上传完毕回调
+			  if(res.code == 0){
+				layer.msg(res.msg,{'icon':2,'anim':6});
+				return;
+			  }else{
+				$('#pre_img').attr('src',"__STATIC__/images/game/"+res.msg);
+			  	$('input[name="pic"]').val(res.msg);
+			  }
+			}
+			,error: function(){
+			  //请求异常回调
+			}
+		});
+	});
+
+    // 保存
+	function save(){
+		var agent = $.trim($('select[name="agent"]').val());
+		if(agent == 0){
+            layer.msg('请选择平台',{'icon':2,'anim':6});
+			return;
+        }
+        var title = $.trim($('input[name="title"]').val());
+		if(title == ""){
+            layer.msg('请输入游戏名称',{'icon':2,'anim':6});
+			return;
+        }
+        var type = $.trim($('input[name="type"]').val());
+		if(type == ""){
+            layer.msg('请输入游戏类型',{'icon':2,'anim':6});
+			return;
+        }
+		var code = $.trim($('input[name="code"]').val());
+		if(code == ""){
+            layer.msg('请输入游戏代码',{'icon':2,'anim':6});
+			return;
+        }
+        var max_player = $.trim($('input[name="max_player"]').val());
+        if(max_player == ""){
+            layer.msg('请输入游戏最大人数',{'icon':2,'anim':6});
+			return;
+        }
+		$.post('/admins.php/admins/game/addSave',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+	}
+</script>

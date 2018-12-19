@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+        <div class="layui-form-item">
+			<label class="layui-form-label">用户名</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="username" value="">
+			</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="pwd" value="">
+            </div>
+		</div>
+		<div class="layui-form-item">
+            <label class="layui-form-label">平台</label>
+            <div class="layui-input-block">
+                <select name="agent" lay-verify="">
+					<option value="0">请选择一个平台</option>
+					{volist name="agentList" id="vv"}
+					<option value="{$vv.id}">{$vv.title}</option>
+					{/volist}
+				</select>
+            </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">分组</label>
+			<div class="layui-input-block">
+                <select name="role" lay-verify="">
+					<option value="0">请选择一个分组</option>
+					{volist name="roleList" id="vv"}
+					<option value="{$vv.id}">{$vv.title}</option>
+					{/volist}
+				</select>
+            </div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-inline">
+                <input type="radio" layui-skin="primary" name="status" title="正常"  value="1" checked>
+				<input type="radio" layui-skin="primary" name="status" title="禁用"  value="0" >
+			</div>
+		</div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+	});
+
+    // 保存
+	function save(){
+        var username = $.trim($('input[name="username"]').val());
+        var pwd = $.trim($('input[name="pwd"]').val());
+		var agent = $.trim($('select[name="agent"]').val());
+		var role = $.trim($('select[name="role"]').val());
+        if(username == ""){
+            layer.msg('请输入用户名',{'icon':2,'anim':6});
+			return;
+        }
+        if(pwd == ""){
+            layer.msg('请输入密码',{'icon':2,'anim':6});
+			return;
+        }
+		if(agent == 0){
+            layer.msg('请选择代理平台',{'icon':2,'anim':6});
+			return;
+        }
+		if(role == 0){
+            layer.msg('请选择管理员分组',{'icon':2,'anim':6});
+			return;
+        }
+		$.post('/admins.php/admins/manage/addSave',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+	}
+</script>

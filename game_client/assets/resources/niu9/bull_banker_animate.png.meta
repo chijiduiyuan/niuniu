@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "15b5eaf6-6e12-4789-9033-c64c2006a946",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "bull_banker_animate": {
+      "ver": "1.0.3",
+      "uuid": "8e4eb853-cfeb-43c3-a5fe-a66dedc8625a",
+      "rawTextureUuid": "15b5eaf6-6e12-4789-9033-c64c2006a946",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 120,
+      "height": 120,
+      "rawWidth": 120,
+      "rawHeight": 120,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

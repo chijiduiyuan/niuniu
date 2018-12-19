@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>修改玩家</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+</head>
+<body style="padding: 10px;">
+	<form class="layui-form">
+        <input type="hidden" name="uid" value="{$userInfo.uid}">
+		<div class="layui-form-item">
+			<label class="layui-form-label">昵称</label>
+			<div class="layui-input-block">
+				<input type="text" class="layui-input" name="nickname" value="{:isset($userInfo.nickname)?$userInfo.nickname:''}" readonly>
+			</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="phone" value="{:isset($userInfo.phone)?$userInfo.phone:''}">
+            </div>
+        </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-inline">
+                <input type="radio" layui-skin="primary" name="status" title="正常"  value="1" <?php if($userInfo['status']==1){echo 'checked';}?>>
+				<input type="radio" layui-skin="primary" name="status" title="封号"  value="0" <?php if($userInfo['status']==0){echo 'checked';}?>>
+			</div>
+		</div>
+	</form>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+	});
+
+    // 保存
+	function save(){
+        var phone = $.trim($('input[name="phone"]').val());
+		if(phone != ''){
+			if(!(/^1[34578]\d{9}$/.test(phone))){
+				layer.msg('手机号码格式不正确',{'icon':2,'anim':2});
+				return;
+			}
+		}
+		$.post('/admins.php/admins/User/editSave',$('form').serialize(),function(res){
+			if(res.code==0){
+				layer.msg(res.msg,{'icon':2,'anim':2});
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.reload();},1000);
+			}
+		},'json');
+	}
+</script>

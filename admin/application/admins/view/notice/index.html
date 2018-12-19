@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style type="text/css">
+		.header span{background: #009688;margin-left: 30px;padding: 10px;color:#ffffff;}
+		.header div{border-bottom: solid 2px #009688;margin-top: 8px;}
+		.header button{float: right;margin-top: -5px;}
+	</style>
+</head>
+<body>
+    <div class="header">
+		<span>公告列表</span>
+		<button class="layui-btn layui-btn-sm" onclick="add()">添加</button>
+		<div></div>
+	</div>
+
+	<table class="layui-table">
+		<thead>
+			<tr>
+				<th>平台</th>
+                <th>内容</th>
+				<th>状态</th>
+				<th>时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="data.data.lists" id="vv"}
+			<tr>
+				<td>{$vv.agent.title}</td>
+				<td>{$vv.content}</td>
+				<td>{:isset($vv.status) && $vv.status == 1? "发布":"<span style='color:red'>未发布</span>"}</td>
+				<td>{:date('Y-m-d H:i:s',$vv.create_time)}</td>
+				<td>
+					<button class="layui-btn layui-btn-xs" onclick="edit({$vv.id})">编辑</button>
+				</td>
+			</tr>
+			{/volist}
+		</tbody>
+    </table>
+    <div id="pages"></div>
+
+
+    <script>
+        layui.use(['layer','laypage'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+			laypage = layui.laypage;
+
+			laypage.render({
+			    elem: 'pages',
+				count:{$data.data.total},               //数据总数
+				limit:{$data.perPage},             //每页显示的条数
+				curr:{$data.current},
+				jump: function(obj, first){
+			    if(!first){
+			    	searchs(obj.curr);
+			    }
+			  }
+			});
+		});
+
+        function searchs(curpage){
+            var url = "/admins.php/admins/Notice/index?page="+curpage;
+            window.location.href = url;
+        }
+
+        //编辑
+		function edit(id){
+			layer.open({
+			  type: 2,
+			  title: '编辑公告',
+			  shade: 0.3,
+			  area: ['500px', '350px'],
+			  content: '/admins.php/admins/Notice/edit?id='+id
+			});
+		}
+
+		//添加
+		function add(){
+			layer.open({
+			  type: 2,
+			  title: '添加公告',
+			  shade: 0.3,
+			  area: ['500px', '400px'],
+			  content: '/admins.php/admins/Notice/add'
+			});
+		}
+    </script>
+</body>
+</html>

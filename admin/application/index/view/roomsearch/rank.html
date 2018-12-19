@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>积分榜</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <script src="__STATIC__/plugins/node_modules/html2canvas/dist/html2canvas.min.js"></script>
+    <style>
+        *{margin: 0;padding: 0;}
+        html,body{width: 100%;height: 100%;}
+        body{position: absolute;top: 0;left: 0;background: url('__STATIC__/images/bg_sendCards.jpg') 100% 100%;background-size: 100% 100%;}
+        .close{width: 2rem;height: 2rem;}
+        .main{width: 80%;height: 30rem;margin: 15% 10%; background: url('__STATIC__/images/dialog_bg.png') 100% 100%;background-size: 100% 100%;position: absolute;top: 0;left: 0;}
+        .close{position: relative;top: 4rem;left: 95%;}
+        .room{width: 90%;height: 1.5rem;background-color: rgba(0, 0, 0, 0.6);margin-top: 6rem;margin-left: 5%;color: #f5f5f5;line-height: 1.5rem;text-align: center;}
+        .title{color: pink;text-align: center;width: 90%;margin-left: 5%;}
+        .item{background-color: #5CA6FA;color: #f5f5f5;height: 1.5rem;line-height: 1.5rem;margin-top: 0.1rem;}
+        .item .avatar{width: 1.2rem;height: 1.2rem;}
+        .no1{height: 1.5rem;}
+        .download{height: 2rem;text-align: center;line-height: 2rem;position: relative;top: 35rem;left: 0;}
+        .download a{display: inline-block;width: 6rem;height: 2rem;color: #f5f5f5;background-color: #009DF2;border-radius: 5px;}
+    </style>
+</head>
+<body>
+    <div class="main">
+        <img src="__STATIC__/images/btn_close.png" class="close" onclick="back({$data.room.id})">
+        <div class="layui-row room">
+            <div class="layui-col-xs5">房间号:{$data.room.id}</div>
+            <div class="layui-col-xs5">{:date('m-d H:i:s')}</div>
+            <div class="layui-col-xs2"><?php if($data['room']['conf']['jushu'] == 1){ echo '10局';} if($data['room']['conf']['jushu'] == 2){ echo '20局';} ?></div>
+        </div>
+        <div class="layui-row title">
+            <div class="layui-col-xs2">排名</div>
+            <div class="layui-col-xs6">玩家</div>
+            <div class="layui-col-xs2">分数</div>
+        </div>
+        {volist name="data.rank" id="vv" key="k"}
+        <div class="layui-row title item">
+            <div class="layui-col-xs2">
+                {$k}
+            </div>
+            <div class="layui-col-xs6">
+                <div class="layui-row">
+                    <div class="layui-col-xs6">
+                        <img src="{$vv.uid.avatar}" class="avatar">
+                    </div>
+                    <div class="layui-col-xs6 nickname">
+                        {$vv.uid.nickname}
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs2">
+                <p class="score">{$vv.score}</p>
+            </div>
+            <div class="layui-col-xs2">
+                {$k == 1 ? '<img src="__STATIC__/images/dayingjia.png" class="no1"/>' : '<div class="no1"></div>'}
+            </div>
+        </div>
+        {/volist}
+    </div>
+
+    <div class="layui-row download">
+        <a class="down" href="" download="downImg">保存图片</a>
+    </div>
+
+    <script>
+        layui.use(['layer'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+            
+            //创建一个新的canvas
+            var canvas2 = document.createElement("canvas");
+            _canvas = document.querySelector('.main');
+            var w = parseInt(window.getComputedStyle(_canvas).width);
+            var h = parseInt(window.getComputedStyle(_canvas).height);
+            //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
+            canvas2.width = w * 2;
+            canvas2.height = h * 2;
+            canvas2.style.width = w + "px";
+            canvas2.style.height = h + "px";
+            var context = canvas2.getContext("2d");
+            context.scale(2, 2);
+            html2canvas(document.querySelector('.main'), { canvas: canvas2 }).then(function(canvas) {
+                //document.body.appendChild(canvas);
+                //canvas转换成url，然后利用a标签的download属性，直接下载，绕过上传服务器再下载
+                document.querySelector(".down").setAttribute('href', canvas.toDataURL());
+            });
+		});
+        
+        function back(id){
+            window.location.href = "/index.php/index/Roomsearch/info?id="+id;
+        }
+        
+    </script>
+</body>
+</html>

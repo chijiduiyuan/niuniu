@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style type="text/css">
+		.header span{background: #009688;margin-left: 30px;padding: 10px;color:#ffffff;}
+		.header div{border-bottom: solid 2px #009688;margin-top: 8px;}
+	</style>
+</head>
+<body>
+    <div class="header">
+		<span>房间列表</span>
+		<div></div>
+	</div>
+
+	<table class="layui-table">
+		<thead>
+			<tr>
+				<th>平台</th>
+                <th>创建人</th>
+				<th>游戏</th>
+                <th>时间</th>
+                <th>状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="data.data.lists" id="vv"}
+			<tr>
+				<td>{$vv.create_uid.agent.title}</td>
+                <td>{$vv.create_uid.nickname}</td>
+                <td>{$vv.game_id.title}</td>
+                <td>{:date('Y-m-d H:i:s',$vv.create_time)}</td>
+				<td><?php if($vv['status']==0){echo "<span style='color:red'>未开始</span>"; } if($vv['status']==1){echo "<span style='color:green'>进行中</span>"; }  if($vv['status']==2){echo "已结束"; } ?></td>
+				<td>
+					<button class="layui-btn layui-btn-xs" onclick="info({$vv.id})">详情</button>
+				</td>
+			</tr>
+			{/volist}
+		</tbody>
+    </table>
+    <div id="pages"></div>
+
+
+    <script>
+        layui.use(['layer','laypage'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+			laypage = layui.laypage;
+
+			laypage.render({
+			    elem: 'pages',
+				count:{$data.data.total},               //数据总数
+				limit:{$data.perPage},             //每页显示的条数
+				curr:{$data.current},
+				jump: function(obj, first){
+			    if(!first){
+			    	searchs(obj.curr);
+			    }
+			  }
+			});
+		});
+
+        function searchs(curpage){
+            var url = "/admins.php/admins/Room/index?page="+curpage;
+            window.location.href = url;
+        }
+
+        function info(id){
+            window.location.href = '/admins.php/admins/Room/info?id='+id;
+        }
+    </script>
+</body>
+</html>

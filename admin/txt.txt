@@ -1,0 +1,4 @@
+ÓòÃû:zh.iwuxb.com
+IP:47.104.17.36  root  Hang10093712
+BT:47.104.17.36:8888  zhanghang hang10093712
+mysql:hostname:47.104.17.36  database:zhanghang  username:zhanghang password:hang10093712

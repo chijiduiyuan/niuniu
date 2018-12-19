@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>创建房间</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+	<script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+	<style>
+		.item-bg{margin: 0.5rem 0;height: 1.5rem; line-height: 1.5rem;}
+		.item-label{padding-top: 0.3rem;color: #FF5722;}
+	</style>
+</head>
+<body>
+	<form class="layui-form rule-bg">
+		<input type="hidden" name="gameId" value="{$game.id}">
+		<div class="layui-tab layui-tab-brief main" lay-filter="docDemoTabBrief">
+			<!--玩法-->
+			<ul class="layui-tab-title layui-row layui-col-space10">
+				<li class="layui-this layui-col-xs3">明牌抢庄</li>
+				<li class="layui-col-xs3">牛牛上庄</li>
+				<li class="layui-col-xs3">自由抢庄</li>
+				<li class="layui-col-xs3">固定庄家</li>
+			</ul>
+			<div class="layui-tab-content">
+				<div class="layui-fluid">
+					<!--房间类型-->
+					<div class="layui-row item-bg">
+						<div class="layui-col-xs2 item-label">
+							房间:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<div class="layui-col-xs6">
+									<input type="radio" name="roomType" value="1" title="公共房间" checked lay-filter="roomType">
+								</div>
+								<div class="layui-col-xs6">
+									<input type="radio" name="roomType" value="2" title="私密房间" lay-filter="roomType">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--底分-->
+					<div class="layui-row item-bg">
+						<div class="layui-col-xs2 item-label">
+							底分:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<div class="layui-col-xs4">
+									<input type="radio" name="difen" value="1" title="1分" checked lay-filter="difen">
+								</div>
+								<div class="layui-col-xs4">
+										<input type="radio" name="difen" value="2" title="2分" lay-filter="difen">
+								</div>
+								<div class="layui-col-xs4">
+										<input type="radio" name="difen" value="3" title="3分" lay-filter="difen">
+								</div>
+								<div class="layui-col-xs4">
+										<input type="radio" name="difen" value="4" title="4分" lay-filter="difen">
+								</div>
+								<div class="layui-col-xs4">
+										<input type="radio" name="difen" value="5" title="5分" lay-filter="difen">
+								</div>
+								<div class="layui-col-xs4">
+									<select name="difen" lay-verify="required" lay-filter="difen">
+										<option value="0">请选择</option>
+										<?php for($i=1;$i<=100;$i++){ ?>
+										<option value="<?php echo $i ?>"><?php echo $i ?>分</option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--规则-->
+					<div class="layui-row item-bg">
+						<div class="layui-col-xs2 item-label">
+							规则:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<input type="radio" name="guize" value="1" title="牛牛x3牛九x2牛八x2" checked>
+							</div>
+							<div class="layui-row">
+								<input type="radio" name="guize" value="2" title="牛牛x4牛九x3牛八x2牛七x2">
+							</div>
+						</div>
+					</div>
+
+					<!--牌型-->
+					<div class="layui-row item-bg">
+						<div class="layui-col-xs2 item-label">
+							牌型:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<div class="layui-col-xs6">
+									<input type="checkbox" name="paixing" title="五花牛(5倍)" lay-skin="primary" value="whn">
+								</div>
+								<div class="layui-col-xs6">
+									<input type="checkbox" name="paixing" title="炸弹牛(6倍)" lay-skin="primary" value="zdn">
+								</div>
+								<div class="layui-col-xs6">
+									<input type="checkbox" name="paixing" title="五小牛(8倍)" lay-skin="primary" value="wxn">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--倍数-->
+					<div class="layui-row item-bg">
+						<div class="layui-col-xs2 item-label">
+							倍数:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<div class="layui-col-xs4">
+									<input type="checkbox" name="beishu" title="1倍" lay-skin="primary" value="1" checked>
+								</div>
+								<div class="layui-col-xs4">
+									<input type="checkbox" name="beishu" title="2倍" lay-skin="primary" value="2" checked>
+								</div>
+								<div class="layui-col-xs4">
+									<input type="checkbox" name="beishu" title="3倍" lay-skin="primary" value="3">
+								</div>
+								<div class="layui-col-xs4">
+									<input type="checkbox" name="beishu" title="4倍" lay-skin="primary" value="4" checked>
+								</div>
+								<div class="layui-col-xs4">
+									<input type="checkbox" name="beishu" title="5倍" lay-skin="primary" value="5">
+								</div>
+								<div class="layui-col-xs4">
+									<input type="checkbox" name="beishu" title="8倍" lay-skin="primary" value="8" checked>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--时间-->
+					<div class="layui-row item-bg">
+						<div class="layui-col-xs2 item-label">
+							时间:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<div class="layui-col-xs6">
+									<div class="layui-col-xs4">准备:</div>
+									<div class="layui-col-xs8">
+										<select name="zhunbei" lay-verify="required">
+											<option value="5">5秒</option>
+											<option value="10" selected>10秒</option>
+											<option value="15">15秒</option>
+											<option value="20">20秒</option>
+										</select>
+									</div>
+								</div>
+								<div class="layui-col-xs6">
+									<div class="layui-col-xs4">抢庄:</div>
+									<div class="layui-col-xs8">
+										<select name="qiangzhuang" lay-verify="required">
+											<option value="5">5秒</option>
+											<option value="10" selected>10秒</option>
+											<option value="15">15秒</option>
+											<option value="20">20秒</option>
+										</select>
+									</div>
+								</div>
+								<div class="layui-col-xs6">
+									<div class="layui-col-xs4">下注:</div>
+									<div class="layui-col-xs8">
+										<select name="xiazhu" lay-verify="required">
+											<option value="5">5秒</option>
+											<option value="10" selected>10秒</option>
+											<option value="15">15秒</option>
+											<option value="20">20秒</option>
+										</select>
+									</div>
+								</div>
+								<div class="layui-col-xs6">
+									<div class="layui-col-xs4">摊牌:</div>
+									<div class="layui-col-xs8">
+										<select name="tanpai" lay-verify="required">
+											<option value="5">5秒</option>
+											<option value="10" selected>10秒</option>
+											<option value="15">15秒</option>
+											<option value="20">20秒</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--局数-->
+					<div class="layui-row item-bg">
+						<div class="layui-col-xs2 item-label">
+							局数:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<div class="layui-col-xs6">
+									<input type="radio" name="jushu" value="1" title="12局x1房卡" checked>
+								</div>
+								<div class="layui-col-xs6">
+									<input type="radio" name="jushu" value="2" title="24局x2房卡">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--上庄-->
+					<div class="layui-row item-bg shangzhuang">
+						<div class="layui-col-xs2 item-label">
+							上庄:
+						</div>
+						<div class="layui-col-xs10">
+							<div class="layui-row">
+								<div class="layui-col-xs4">
+									<input type="radio" name="shangzhuang" value="100" title="100" checked >
+								</div>
+								<div class="layui-col-xs4">
+									<input type="radio" name="shangzhuang" value="300" title="300" >
+								</div>
+								<div class="layui-col-xs4">
+									<input type="radio" name="shangzhuang" value="500" title="500" >
+								</div>
+								<div class="layui-col-xs4">
+									<input type="radio" name="shangzhuang" value="1000" title="1000" >
+								</div>
+								<div class="layui-col-xs4">
+									<input type="radio" name="shangzhuang" value="2000" title="2000" >
+								</div>
+								<div class="layui-col-xs4">
+									<input type="radio" name="shangzhuang" value="999999" title="无" >
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</form>
+
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" onclick="create()">创建房间</button>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	layui.use(['form','layer','element'],function(){
+		$ = layui.jquery;
+		var form = layui.form;
+		layer = layui.layer;
+		var element = layui.element;
+		//初始玩法为明牌抢庄
+		var wanfa = 0;
+		var difen = 1;
+		var shangzhuang = 0;
+		rule(wanfa);
+		element.on('tab(docDemoTabBrief)', function(data){
+            //console.log(data);
+            var index = data.index;
+            rule(index);
+        });
+	});
+
+	//切换玩法
+	function rule(index){
+		//console.log(index);
+		wanfa = index;
+		if(wanfa ==3){
+			$('.shangzhuang').show();
+		}else{
+			$('.shangzhuang').hide();
+		}
+	}
+
+	//创建房间
+	function create(){
+		var gameId = $.trim($('input[name="gameId"]').val());
+		if(!gameId){
+			layer.msg('请重新选择游戏',{'icon':2,'anim':6});
+			return;
+		}
+		var roomType = $.trim($('input[name="roomType"]:checked').val()) * 1;
+		//底分
+		var difenArr = [];
+		difenArr[0] =  $.trim($('input[name="difen"]:checked').val()) * 1;
+		difenArr[1] = $.trim($('select[name="difen"]').val()) * 1;
+		difenArr.sort(function(a,b){
+			return a-b;
+		})
+		var difen = difenArr[difenArr.length - 1];
+		if(difen <= 0 || !difen){
+			layer.msg('请选择底分',{'icon':2,'anim':6});
+			return;
+		}
+		//console.log(difen);
+		var guize = $.trim($('input[name="guize"]:checked').val()) * 1;
+		//console.log(guize);
+		var paixingArr = [];
+		$('input[name="paixing"]:checked').each(function(){
+			paixingArr.push($(this).val());
+		});
+		//console.log(paixingArr);
+		var beishuArr = [];
+		$('input[name="beishu"]:checked').each(function(){
+			beishuArr.push($(this).val()* 1);
+		});
+		if(beishuArr.length !== 4){
+			layer.msg('请选择任意4个倍数',{'icon':2,'anim':6});
+			return;
+		}
+		//console.log(beishuArr);
+		zhunbei = $.trim($('select[name="zhunbei"]').val())* 1;
+		qiangzhuang = $.trim($('select[name="qiangzhuang"]').val())* 1;
+		xiazhu = $.trim($('select[name="xiazhu"]').val())* 1;
+		tanpai = $.trim($('select[name="tanpai"]').val())* 1;
+		shijianArr = [zhunbei,qiangzhuang,xiazhu,tanpai];
+		//console.log(shijianArr);
+		var jushu = $.trim($('input[name="jushu"]:checked').val())* 1;
+		
+		if(wanfa == 3){
+			shangzhuang = $.trim($('input[name="shangzhuang"]:checked').val())* 1;
+		}else{
+			shangzhuang = 0;
+		}
+		var conf = {
+				'roomType' : roomType,
+				'wanfa' : wanfa,
+				'difen' : difen,
+				'guize' : guize,
+				'paixing' : paixingArr,
+				'beishu' : beishuArr,
+				'shijian' : shijianArr,
+				'jushu' : jushu,
+				'shangzhuang' : shangzhuang
+			}
+		$.post('/index.php/index/index/createAjax',{gameId:gameId,conf:JSON.stringify(conf)},function(res){
+			if(res.code == 0){
+				layer.msg(res.msg,{'icon':2,'anim':6});
+				return;
+			}else{
+				layer.msg(res.msg,{'icon':1});
+				setTimeout(function(){parent.window.location.href = '/index.php/index/index/wait?roomId='+res.id;},1000);
+			}
+		},'json')
+	}
+
+</script>

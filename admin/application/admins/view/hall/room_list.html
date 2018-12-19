@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/plugins/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/plugins/layui/layui.js"></script>
+    <style type="text/css">
+		.header span{background: #009688;margin-left: 30px;padding: 10px;color:#ffffff;}
+		.header div{border-bottom: solid 2px #009688;margin-top: 8px;}
+		.header button{float: right;margin-top: -5px;}
+	</style>
+</head>
+<body>
+    <div class="header">
+		<span>房间列表</span>
+		<div></div>
+	</div>
+
+	<table class="layui-table">
+		<thead>
+			<tr>
+				<th>平台</th>
+                <th>房间号</th>
+                <th>游戏名</th>
+				<th>创建者</th>
+				<th>局数</th>
+				<th>消耗房卡</th>
+				<th>创建时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="roomList" id="vv"}
+			<tr>
+				<td>{$vv.agent.title}</td>
+                <td>{$vv.roomId}</td>
+				<td>{$gameType[$vv.gameType]}</td>
+				<td>{$vv.owner.nickname}</td>
+				<td>{$vv.currentRound}/{$vv.maxRounds}</td>
+				<td>{$vv.roomCards}</td>
+				<td>{:date('Y-m-d H:i:s',$vv.createTimestamp)}</td>
+				<td>
+					<button class="layui-btn layui-btn-xs" ><a href="/admins.php/admins/hall/roomInfo?roomId={$vv.roomId}">详情</a></button>
+				</td>
+			</tr>
+			{/volist}
+		</tbody>
+    </table>
+    <div id="pages"></div>
+
+
+    <script>
+        layui.use(['layer','laypage'],function(){
+			layer = layui.layer;
+			$ = layui.jquery;
+			laypage = layui.laypage;
+
+			laypage.render({
+			    elem: 'pages',
+				count:{$count},               //数据总数
+				limit:{$perPage},             //每页显示的条数
+				curr:{$current},
+				jump: function(obj, first){
+			    if(!first){
+			    	searchs(obj.curr);
+			    }
+			  }
+			});
+		});
+
+        function searchs(curpage){
+            var url = "/admins.php/admins/hall/roomList?page="+curpage;
+            window.location.href = url;
+        }
+
+        
+    </script>
+</body>
+</html>
